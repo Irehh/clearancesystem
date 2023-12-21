@@ -14,7 +14,7 @@
 	<meta property="og:image" content="{{$user->photo}}">
 	<meta property="og:description" content="{{$user->description}}"> --}}
 @endsection
-@section('title','E-SHOP || VENDOR DETAIL')
+@section('title','UMART || VENDOR DETAIL')
 @section('main-content')
 
 		<!-- Breadcrumbs -->
@@ -25,7 +25,7 @@
 						<div class="bread-inner">
 							<ul class="bread-list">
 								<li><a href="{{route('home')}}">Home<i class="ti-arrow-right"></i></a></li>
-								<li class="active"><a href="">Shop Details</a></li>
+								<li class="active"><a href="">Vendor Details</a></li>
 							</ul>
 						</div>
 					</div>
@@ -45,22 +45,16 @@
 										<div class="product-gallery">
 											<!-- Images slider -->
 											<div class="flexslider-thumbnails">
-												<ul class="slides">
-													
-														@if($user['banner'])
-														<img src="{{$user['banner']}}" alt="" srcset="">
-														<img class="card-img-top img-fluid roundend-circle mt-4" style="border-radius:50%;height:80px;width:80px;margin:auto;" src="{{$user['photo']}}" alt="profile picture">
-														@else 
-														<div class="image">
-															<img class="card-img-top img-fluid roundend-circle mt-4" style="border-radius:50%;height:80px;width:80px;margin:auto;" src="{{asset('/backend/img/avatar.jpg')}}" alt="profile picture">
-														</div>
-														@endif
-														@if($user['photo'])
-														<img class="card-img-top img-fluid roundend-circle mt-4" style="border-radius:50%;height:80px;width:80px;margin:auto;" src="{{$user['photo']}}" alt="profile picture">
-														@else 
-														<img class="card-img-top img-fluid roundend-circle mt-4" style="border-radius:50%;height:80px;width:80px;margin:auto;" src="{{asset('/backend/img/avatar.jpg')}}" alt="profile picture">
-														@endif
-													
+												<ul class="slides" >
+													<div style="position: relative;">
+														@if($user->userdetails && $user->userdetails->banner !== null)
+                                                            <img src="{{$user->userdetails->banner}}" style="width:100%;" alt="" srcset="">
+                                                            <img class="card-img-top img-fluid roundend-circle mt-4" style="border-radius:50%;height:80px;width:80px;margin:auto; position:absolute; right:20px" src="{{$user->userdetails->banner}}" alt="banner picture">
+                                                            @else 
+                                                            <img src="{{ asset('backend/img/background.jpg')}}" style="width:100%;" alt="" srcset="">
+                                                            @endif
+
+                                                    </div>
 												</ul>
 											</div>
 											<!-- End Images slider -->
@@ -77,16 +71,19 @@
 													<a href="#" class="total-review">({{$user->products->count()}}) Products</a>
 													
                                                 </div>
-												<p class="description">{!!($user['about'])!!}</p>
+												<p class="description">Description: {!! ($user->userdetails && $user->userdetails->about) ? $user->userdetails->about : 'Not Set' !!}
+                                                </p>
 											</div>
 
 											<!-- Product Buy -->
 											<div class="product-buy">
 													<div class="add-to-cart mt-4">
 														<button type="submit" class="btn">Message</button>
-														<a href="{{$user['link']}}" class="btn min">Link</i></a>
+														<a href="{{$user->userdetails ? $user->userdetails->whatsapp_link : 'Default WhatsApp Link'}}
+                                                            " class="btn min">Link</i></a>
 													</div>
-												<p class="cat">Address : {{$user['location']}}</p>
+												<p class="cat">Address : {{$user->userdetails ? $user->userdetails->location : 'Not Set'}}
+                                                </p>
 												{{-- @if($user->sub_cat_info)
 												<p class="cat mt-1">Sub Category :<a href="{{route('product-sub-cat',[$user->cat_info['slug'],$user->sub_cat_info['slug']])}}">{{$user->sub_cat_info['title']}}</a></p>
 												@endif

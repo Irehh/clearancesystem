@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -50,7 +50,7 @@ class User extends Authenticatable
     }
 
     public static function getUserBySlug($slug){
-        return User::with(['products','orders',])->where('slug',$slug)->where('status', 'active')->first();
+        return User::with(['products','orders','userdetails'])->where('slug',$slug)->where('status', 'active')->first();
     }
     
 }

@@ -27,7 +27,11 @@ use Illuminate\Support\Facades\Auth;
     Route::get('storage-link',[\App\Http\Controllers\AdminController::class,'storageLink'])->name('storage.link');
 
 
-    Auth::routes(['register' => false]);
+    Auth::routes([
+        // 'register' => false,
+        'verify' => true
+
+        ]);
 
     Route::get('user/login', 'FrontendController@login')->name('login.form');
     Route::post('user/login', 'FrontendController@loginSubmit')->name('login.submit');
@@ -36,7 +40,7 @@ use Illuminate\Support\Facades\Auth;
     Route::get('user/register', 'FrontendController@register')->name('register.form');
     Route::post('user/register', 'FrontendController@registerSubmit')->name('register.submit');
 // Reset password
-    Route::post('password-reset', 'FrontendController@showResetForm')->name('password.reset');
+    Route::get('password-reset', 'FrontendController@showResetForm')->name('password.reset');
 // Socialite
     Route::get('login/{provider}/', 'Auth\LoginController@redirect')->name('login.redirect');
     Route::get('login/{provider}/callback/', 'Auth\LoginController@Callback')->name('login.callback');

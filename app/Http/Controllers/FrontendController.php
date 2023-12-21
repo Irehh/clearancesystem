@@ -12,7 +12,7 @@ use App\Models\Brand;
 use App\User;
 use Auth;
 use Session;
-use Newsletter;
+use Spatie\Newsletter\Facades\Newsletter;
 use DB;
 use Hash;
 use Illuminate\Support\Str;
@@ -419,9 +419,10 @@ class FrontendController extends Controller
 
     public function subscribe(Request $request){
         if(! Newsletter::isSubscribed($request->email)){
-                Newsletter::subscribePending($request->email);
+            Newsletter::subscribe($request->email);
+                // Newsletter::subscribePending();
                 if(Newsletter::lastActionSucceeded()){
-                    request()->session()->flash('success','Subscribed! Please check your email');
+                    request()->session()->flash('success','Subscribed! Thank you for subscribing');
                     return redirect()->route('home');
                 }
                 else{
