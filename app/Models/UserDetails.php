@@ -10,7 +10,7 @@ class UserDetails extends Model
 {
     use HasFactory;
     protected $table = 'user_details';
-    protected $fillable = ['phone_number','banner','about','website_link','location','company_name', 'address', 'facebook_link', 'whatsapp_link', 'twitter_link'];
+    protected $fillable = ['phone_number','banner','about','website_link','location','company_name', 'address', 'facebook_link', 'whatsapp_link', 'twitter_link','user_id'];
 
     // Define the relationship with the User model
     public function user()

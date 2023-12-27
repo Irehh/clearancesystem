@@ -1,22 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
+use DB;
+use Auth;
+use Hash;
+use Session;
+use App\User;
+use App\Models\Cart;
+use App\Models\Post;
+use App\Models\Brand;
 use App\Models\Banner;
+use App\Models\PostTag;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\PostTag;
-use App\Models\PostCategory;
-use App\Models\Post;
-use App\Models\Cart;
-use App\Models\Brand;
-use App\User;
-use Auth;
-use Session;
-use Spatie\Newsletter\Facades\Newsletter;
-use DB;
-use Hash;
 use Illuminate\Support\Str;
+use App\Models\PostCategory;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Spatie\Newsletter\Facades\Newsletter;
+
 class FrontendController extends Controller
 {
    

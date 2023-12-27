@@ -12,6 +12,8 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     //admin controls this controller
     public function index()
     {
         $users=User::orderBy('id','ASC')->paginate(10);
@@ -91,6 +93,8 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function update(Request $request, $id)
     {
         $user=User::findOrFail($id);

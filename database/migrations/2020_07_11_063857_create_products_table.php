@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->text('photo');
             $table->integer('stock')->default(1);
             $table->string('size')->default('M')->nullable();
-            $table->enum('condition',['default','new','hot'])->default('default');
+            $table->enum('condition', ['default', 'new', 'hot', 'used'])->default('default');
             $table->enum('status',['active','inactive'])->default('inactive');
             $table->float('price');
             $table->float('discount')->nullable();
@@ -33,6 +33,8 @@ class CreateProductsTable extends Migration
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('SET NULL');
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('SET NULL');
             $table->foreign('child_cat_id')->references('id')->on('categories')->onDelete('SET NULL');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

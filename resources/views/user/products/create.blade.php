@@ -43,7 +43,7 @@
 
         <div class="form-group">
           <label for="is_featured">Is Featured</label><br>
-          <input type="checkbox" name='is_featured' id='is_featured' value='1' checked> Yes                        
+          <input type="checkbox" name='is_featured' id='is_featured' value='{{ 0 }}' checked readonly> No                        
         </div>
               {{-- {{$categories}} --}}
 
@@ -125,7 +125,12 @@
         <div class="form-group">
           <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
           <div class="input-group">
-              <input type="file" name="photo" id="photo" accept=".jpeg, .jpg, .png, .gif" value="{{ old('photo') }}">
+              <span class="input-group-btn">
+                  <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                  <i class="fa fa-picture-o"></i> Choose
+                  </a>
+              </span>
+          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
         </div>
         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
           @error('photo')

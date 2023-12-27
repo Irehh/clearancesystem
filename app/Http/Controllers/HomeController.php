@@ -7,11 +7,12 @@ use App\User;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\PostComment;
+use App\Models\UserDetails;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProductReview;
 use App\Rules\MatchOldPassword;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\userProfileUpdate;
 use App\Http\Controllers\ImageController;
 
@@ -24,7 +25,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth']);
     }
 
     /**
@@ -39,91 +40,14 @@ class HomeController extends Controller
     }
 
     public function profile(){
-        $profile=Auth()->user();
+        $id=Auth()->user()->id;
         // return $profile;
-        return view('user.users.profile')->with('profile',$profile);
+        $user = User::getUserById($id);
+        return view('user.users.profile')->with("user",$user);
     }
 
-public function profileUpdate(userProfileUpdate $request, $id)
-{
-    $user = User::findorFail($id);
-    $validatedData = $request->validated();
-    
-    if ($user) {
-        // Store the old photo path
-        $oldPhotoPath = $user->photo;
-        $oldbanner = $user->banner;
+  
 
-        
-            $user->name = $validatedData['name'];
-            $user->phone_number = $validatedData['phone_number'];
-            $user->about = $validatedData['about'];
-            $user->link = $validatedData['link'];
-            $user->location = $validatedData['location'];
-            $user->display = $validatedData['display'];
-      
-
-        // Save the updated user data
-        $user->update();
-
-        request()->session()->flash('success', 'Successfully updated your profile');
-    } else {
-        request()->session()->flash('error', 'Please try again!');
-    }
-
-    return redirect()->back();
-}
-
-
-// public function profileUpdate(userProfileUpdate $request, $id)
-// {
-//     $user = auth()->user();
-//     $validatedData = $request->validated();
-//     if($user){
-//         $user->update([
-//             'name' => $validatedData['name'],
-//             'phone_number' => $validatedData['phone_number'],
-//             'about' => $validatedData['about'],
-//             'link' => $validatedData['link'],
-//             'location' => $validatedData['location'],
-//             'display' => $validatedData['display'],
-
-//         ]);
-    
-    
-//     if($request->hasFile('photo'))
-//     {
-//         // Upload the new image
-//         $imageController = new ImageController();
-//         $newPhoto = $imageController->upload($request, 200, 200, 'photos/1/users');
-//         // Update the user's profile with the new image path
-//         $user->banner = $newPhoto;
-
-//         $path =  $user->photo;
-//         if (File::exists($path)) {
-//             File::delete($path);
-//         }
-//     }
-//     if ($request->hasFile('banner')) 
-//     {
-//         // Upload the new image
-//         $imageController = new ImageController();
-//         $newPhotoPath = $imageController->profile($request, 200, 200, 'photos/banners');
-
-//         // Update the user's profile with the new image path
-//         $user->banner = $newPhotoPath;
-//         $path =  $user->photo;
-//         if (File::exists($path)) {
-//             File::delete($path);
-//         }
-//     }
-//     request()->session()->flash('success', 'Successfully updated your profile');
-//     } else {
-//         request()->session()->flash('error', 'Please try again!');
-//     }
-
-//     return redirect()->back();
-// }
 
     // Order
     public function orderIndex(){
