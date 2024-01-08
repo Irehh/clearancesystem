@@ -78,7 +78,6 @@ class UserProductController extends Controller
         ]);
 
         $data=$request->all();
-        dd($data);
         $slug=Str::slug($request->title);
         $count=Product::where('slug',$slug)->count();
         if($count>0){

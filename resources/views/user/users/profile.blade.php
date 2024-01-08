@@ -32,16 +32,16 @@
                       <h5 class="card-title text-left"><small><i class="fas fa-user"></i> {{$user->name}}</small></h5>
                       <p class="card-text text-left"><small><i class="fas fa-envelope"></i> {{$user->email}}</small></p>
                       <p class="card-text text-left"><small class="text-muted"><i class="fas fa-user-md"></i> {{$user->role}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-building"></i> {{$user->user_details && $user->user_details->about ? $user->user_details->about : "Set Your Business Name"}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-phone"></i> {{$user->userdetails->phone_number}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-address-card"></i> {{$user->user_details || $user->user_details->about ? $user->user_details->about : "About"}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-location-arrow"></i> {{$user->user_details && $user->user_details->address ? $user->user_details->address : "Add your address"}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-map-marker"></i> {{$user->user_details && $user->user_details->location ? $user->user_details->location : "Location"}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-link"></i> {{$user->user_details && $user->user_details->website_link ? $user->user_details->website_link : "Website link"}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-link"></i> {{$user->user_details && $user->user_details->whatsapp_link ? $user->user_details->whatsapp_link : "Whatsapp link"}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i  class="fa fa-link"></i> {{$user->user_details && $user->user_details->facebook_link ? $user->user_details->facebook_link : "Facebook link"}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-link"></i> {{$user->user_details && $user->user_details->twitter_link ? $user->user_details->twitter_link : "Twitter link"}}</small></p>
-                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-cog"></i> {{$user->user_details && $user->user_details->display ? $user->user_details->display : "no"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-building"></i> {{$user->userdetails && $user->userdetails->company_name ? $user->userdetails->company_name : "Set Your Business Name"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-phone"></i> {{$user->userdetails && $user->userdetails->phone_number ? $user->userdetails->phone_number : "Add phone number"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-address-card"></i> {{$user->userdetails != null && $user->userdetails->about != null ? $user->userdetails->about : "About"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-location-arrow"></i> {{$user->userdetails && $user->userdetails->address ? $user->userdetails->address : "Add your address"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-map-marker"></i> {{$user->userdetails && $user->userdetails->location ? $user->userdetails->location : "Location"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-link"></i> {{$user->userdetails && $user->userdetails->website_link ? $user->userdetails->website_link : "Website link"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-link"></i> {{$user->userdetails && $user->userdetails->whatsapp_link ? $user->userdetails->whatsapp_link : "Whatsapp link"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i  class="fa fa-link"></i> {{$user->userdetails && $user->userdetails->facebook_link ? $user->userdetails->facebook_link : "Facebook link"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-link"></i> {{$user->userdetails && $user->userdetails->twitter_link ? $user->userdetails->twitter_link : "Twitter link"}}</small></p>
+                      <p class="card-text text-left"><small class="text-muted"><i class="fas fa-cog"></i> {{$user->userdetails && $user->userdetails->display ? $user->userdetails->display : "no"}}</small></p>
                     </div>
                   </div>
             </div>
@@ -66,7 +66,7 @@
 
                       <div class="form-group">
                         <label for="phone_number" class="col-form-label">Phone Number <span class="text-danger"></span></label>
-                        <input type="text" class="form-control" name="phone_number" value="{{$user->phone_number}}">
+                        <input type="text" class="form-control" name="phone_number" value="{{$user->userdetails && $user->userdetails->phone_number ? $user->userdetails->phone_number : ""}}">
                         @error('phone_number')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -74,7 +74,7 @@
 
                       <div class="form-group">
                         <label for="location" class="col-form-label">Business Name <span class="text-danger"></span></label>
-                        <input type="text" class="form-control" name="company_name" value="{{$user->user_details && $user->user_details->company_name ? $user->user_details->company_name : ""}}">
+                        <input type="text" class="form-control" name="company_name" value="{{$user->userdetails && $user->userdetails->company_name ? $user->userdetails->company_name : ""}}">
                         @error('company_name')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -88,7 +88,7 @@
                                 <i class="fa fa-picture-o"></i> Choose
                                 </a>
                             </span>
-                        <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
+                        <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$user && $user->photo ? $user->photo : ""}}">
                       </div>
                       <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                         @error('photo')
@@ -100,13 +100,13 @@
                         <label for="inputbanner" class="col-form-label">Banner</label>
                         <div class="input-group">
                           <span class="input-group-btn">
-                            <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                            <a id="lfm_banner" data-input="thumbnail_banner" data-preview="holder_banner" class="btn btn-primary">
                             <i class="fa fa-picture-o"></i> Choose
                             </a>
                         </span>
-                        <input id="thumbnail" class="form-control" type="text" name="banner" value="{{old('banner')}}">
+                        <input id="thumbnail_banner" class="form-control" type="text" name="banner" value="{{$user->userdetails && $user->userdetails->banner ? $user->userdetails->banner : ""}}">
                       </div>
-                      <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+                      <div id="holder_banner" style="margin-top:15px;max-height:100px;"></div>
                         @error('banner')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -114,7 +114,7 @@
 
                       <div class="form-group">
                         <label for="about" class="col-form-label">Description <span class="text-danger"></span></label>
-                        <textarea class="form-control" id="about" name="about">{{$user->user_details && $user->user_details->about ? $user->user_details->about : "" }}</textarea>
+                        <textarea class="form-control" id="about" name="about">{{$user->userdetails && $user->userdetails->about ? $user->userdetails->about : "" }}</textarea>
                         @error('about')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -122,7 +122,7 @@
 
                       <div class="form-group">
                         <label for="location" class="col-form-label">Address <span class="text-danger"></span></label>
-                        <input type="text" class="form-control" name="address" value="{{$user->user_details && $user->user_details['address'] ? $user->user_details['address'] : ""}}">
+                        <input type="text" class="form-control" name="address" value="{{$user->userdetails && $user->userdetails['address'] ? $user->userdetails['address'] : ""}}">
                         @error('address')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -130,7 +130,7 @@
 
                       <div class="form-group">
                         <label for="location" class="col-form-label">Location <span class="text-danger"></span></label>
-                        <input type="text" class="form-control" name="location" value="{{$user->user_details && $user->user_details->location ? $user->user_details->location : ""}}">
+                        <input type="text" class="form-control" name="location" value="{{$user->userdetails && $user->userdetails->location ? $user->userdetails->location : ""}}">
                         @error('location')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -138,7 +138,7 @@
 
                       <div class="form-group">
                         <label for="inputTitle" class="col-form-label">Website link</label>
-                      <input id="inputTitle" type="text" name="website_link" placeholder="Enter link"  value="{{$user->user_details && $user->user_details->website_link ? $user->user_details->website_link : ""}}" class="form-control">
+                      <input id="inputTitle" type="text" name="website_link" placeholder="Enter link"  value="{{$user->userdetails && $user->userdetails->website_link ? $user->userdetails->website_link : ""}}" class="form-control">
                       @error('website_link')
                       <span class="text-danger">{{$message}}</span>
                       @enderror
@@ -146,7 +146,7 @@
 
                       <div class="form-group">
                         <label for="inputTitle" class="col-form-label"> Facebook link</label>
-                      <input id="inputTitle" type="text" name="facebook_link" placeholder="Enter link"  value="{{$user->user_details && $user->user_details->facebook_link ? $user->user_details->facebook_link : ""}}" class="form-control">
+                      <input id="inputTitle" type="text" name="facebook_link" placeholder="Enter link"  value="{{$user->userdetails && $user->userdetails->facebook_link ? $user->userdetails->facebook_link : ""}}" class="form-control">
                       @error('facebook_link')
                       <span class="text-danger">{{$message}}</span>
                       @enderror
@@ -154,7 +154,7 @@
 
                       <div class="form-group">
                         <label for="inputTitle" class="col-form-label"> Whatsapp link</label>
-                      <input id="inputTitle" type="text" name="whatsapp_link" placeholder="Enter link"  value="{{$user->user_details && $user->user_details->whatsapp_link ? $user->user_details->whatsapp_link : ""}}" class="form-control">
+                      <input id="inputTitle" type="text" name="whatsapp_link" placeholder="Enter link"  value="{{$user->userdetails && $user->userdetails->whatsapp_link ? $user->userdetails->whatsapp_link : ""}}" class="form-control">
                       @error('whatsapp_link')
                       <span class="text-danger">{{$message}}</span>
                       @enderror
@@ -162,17 +162,18 @@
 
                       <div class="form-group">
                         <label for="inputTitle" class="col-form-label">Twitter link</label>
-                      <input id="inputTitle" type="text" name="twitter_link" placeholder="Enter link"  value="{{$user->user_details && $user->user_details->twitter_link ? $user->user_details->twitter_link : ""}}" class="form-control">
+                      <input id="inputTitle" type="text" name="twitter_link" placeholder="Enter link"  value="{{$user->userdetails && $user->userdetails->twitter_link ? $user->userdetails->twitter_link : ""}}" class="form-control">
                       @error('twitter_link')
                       <span class="text-danger">{{$message}}</span>
                       @enderror
                       </div>
+                        {{-- i have issue with this input so its suspended for now --}}
 
                       <div class="form-group">
-                        <label for="display" class="col-form-label">Display Account</label>
+                        <label for="display" disabled class="col-form-label">Display Account</label>
                         <select name="display" class="form-control">
-                            <option value="no" {{ $user->user_details && $user->user_details->display == "no" ? "selected" : "" }}>No</option>
-                            <option value="yes" {{ $user->user_details && $user->user_details->display == "yes" ? "selected" : "" }} >Yes</option>
+                            <option value="no" {{ $user->userdetails && $user->userdetails->display === "no" ? "selected" : "nothing" }}>No</option>
+                            <option value="yes" {{ $user->userdetails && $user->userdetails->display === "yes" ? "selected" : "nothing" }} >Yes</option>
                         </select>
                         @error('display')
                         <span class="text-danger">{{$message}}</span>
@@ -228,5 +229,8 @@
 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
 <script>
     $('#lfm').filemanager('image');
+</script>
+<script>
+  $('#lfm_banner').filemanager('image');
 </script>
 @endpush

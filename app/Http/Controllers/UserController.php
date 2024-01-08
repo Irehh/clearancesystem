@@ -58,10 +58,12 @@ class UserController extends Controller
 
     if (!$userDetails) {
         // If the record doesn't exist, create a new instance
-        $userDetails = new UserDetails(['user_id' => $profile]);
+        $userDetails = new UserDetails(['user_id' => $profile,'display' => 'yes']);
     }
+    
 
-    $status2 = $userDetails->update($data);
+    $status2 = $userDetails->fill($data)->save();
+    
 
     if ($status && $status2) {
         request()->session()->flash('success', 'Profile Successfully updated');
