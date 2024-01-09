@@ -41,10 +41,10 @@
         </div>
 
 
-        <div class="form-group">
+        {{-- <div class="form-group">
           <label for="is_featured">Is Featured</label><br>
-          <input type="checkbox" name='is_featured' id='is_featured' value='{{ 0 }}' checked readonly> No                        
-        </div>
+          <input hidden type="checkbox" name='is_featured' id='is_featured' value='{{ 0 }}' checked readonly> No                        
+        </div> --}}
               {{-- {{$categories}} --}}
 
               <div class="form-group">
@@ -112,11 +112,12 @@
               <option value="default">Default</option>
               <option value="new">New</option>
               <option value="hot">Hot</option>
+              <option value="used">Used</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="stock">Quantity <span class="text-danger">*</span></label>
+          <label for="stock">Quantity</label>
           <input id="quantity" type="number" name="stock" min="0" placeholder="Enter quantity"  value="{{old('stock')}}" class="form-control">
           @error('stock')
           <span class="text-danger">{{$message}}</span>

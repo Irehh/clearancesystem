@@ -98,6 +98,9 @@ class UserProductController extends Controller
         if(!$data['stock']){
             $data['stock'] = 1;
         }
+        if(!$data['description']){
+            $data['description'] = 'Check more on umart.ng';
+        }
         // return $size;
         // return $data;
         $status=Product::create($data);
