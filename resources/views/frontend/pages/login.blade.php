@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','E-Shop || Login Page')
+@section('title','Umart || Login Page')
 
 @section('main-content')
     <!-- Breadcrumbs -->
@@ -27,7 +27,7 @@
                 <div class="col-lg-6 offset-lg-3 col-12">
                     <div class="login-form">
                         <h2>Login</h2>
-                        <p>Please register in order to checkout more quickly</p>
+                        <p>Please register in order to do more quickly</p>
                         <!-- Form -->
                         <form class="form" method="post" action="{{route('login.submit')}}">
                             @csrf

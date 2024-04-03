@@ -160,7 +160,7 @@
                                 <!--/ End Shop Top -->
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="width: 50%; display:grid;">
                             {{-- {{$products}} --}}
                             @if(count($products)>0)
                                 @foreach($products as $product)

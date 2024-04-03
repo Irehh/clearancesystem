@@ -56,6 +56,9 @@ use Illuminate\Support\Facades\Auth;
     Route::get('/product-cat/{slug}', 'FrontendController@productCat')->name('product-cat');
     Route::get('/product-sub-cat/{slug}/{sub_slug}', 'FrontendController@productSubCat')->name('product-sub-cat');
     Route::get('/product-brand/{slug}', 'FrontendController@productBrand')->name('product-brand');
+    Route::get('/redirect-to-whatsapp/{userId}/{productSlug}', 'FrontendController@redirectToWhatsApp')->name('redirect-to-whatsapp');
+
+
 // Cart section
     Route::get('/add-to-cart/{slug}', 'CartController@addToCart')->name('add-to-cart')->middleware('user');
     Route::post('/add-to-cart', 'CartController@singleAddToCart')->name('single-add-to-cart')->middleware('user');
@@ -200,6 +203,15 @@ use Illuminate\Support\Facades\Auth;
         Route::post('/category/{id}/child', 'HomeController@getChildByParent');
 
     });
+
+    // Route::middleware('role:admin')->group(function () {
+    //     // Routes accessible only to admin
+    // });
+    
+    // Route::middleware('role:student,faculty')->group(function () {
+    //     // Routes accessible to students and faculty
+    // });
+    
 
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();

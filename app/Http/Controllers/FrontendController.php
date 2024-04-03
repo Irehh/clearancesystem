@@ -442,4 +442,28 @@ class FrontendController extends Controller
 
         return view('frontend.pages.vendor-detail')->with('user', $user);
     }
+
+    public function redirectToWhatsApp($userId, $productSlug)
+    {
+         // Retrieve user details
+        $user = User::find($userId);
+
+        if ($user && $user->phone_number) {
+            // Customize the WhatsApp message with product details
+            $message = "Hello! I'm interested in the product with {$productSlug}, http://localhost:8000/product-detail/{$productSlug} . Can you provide more information?";
+
+            // Encode the message for a URL
+            $encodedMessage = urlencode($message);
+
+            // Construct the WhatsApp URL with the user's phone number and custom message
+            $whatsappUrl = "https://wa.me/+234{$user->phone_number}?text={$encodedMessage}";
+
+            // Redirect to WhatsApp
+            return redirect()->away($whatsappUrl);
+        } else {
+            // Handle the case where the user or phone number doesn't exist
+            request()->session()->flash('error','Can\'t connect to whatsapp ');
+                return back();
+        }
+    }
 }

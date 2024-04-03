@@ -2016,7 +2016,7 @@ Version:1.0
   opacity: 1;
 }
 .single-product .product-content h3 {
-    line-height: 22px;
+    line-height: 20px;
 }
 .single-product .product-content h3 a {
 	font-size: 14px;
@@ -2027,7 +2027,7 @@ Version:1.0
 	color:#F7941D;
 }
 .single-product .product-content .product-price {
-  margin: 6px 0 0 0;
+  margin: 0px 0 0 0;
 }
 .single-product .product-content .product-price span {
 	font-size: 15px;

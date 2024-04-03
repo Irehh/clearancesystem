@@ -14,7 +14,7 @@
 	<meta property="og:image" content="{{$product_detail->photo}}">
 	<meta property="og:description" content="{{$product_detail->description}}">
 @endsection
-@section('title','E-SHOP || PRODUCT DETAIL')
+@section('title','Umart || PRODUCT DETAIL')
 @section('main-content')
 
 		<!-- Breadcrumbs -->
@@ -67,6 +67,7 @@
 											<div class="short">
 												<h4>{{$product_detail->title}}</h4>
 												<p>Posted by:<a href="{{route('vendor-detail',$product_detail->user->slug)}}"> {{ $product_detail->user->name }} </a> </p>
+												<p>Added {{ $product_detail->created_at->diffForHumans() }}</p>
 												<div class="rating-main">
 													<ul class="rating">
 														@php
@@ -86,7 +87,7 @@
                                                 @php 
                                                     $after_discount=($product_detail->price-(($product_detail->price*$product_detail->discount)/100));
                                                 @endphp
-												<p class="price"><span class="discount">&#x20A6;{{number_format($after_discount,2)}}</span><s>&#x20A6;{{number_format($product_detail->price,2)}}</s> </p>
+												<p class="price"><span class="discount">&#8358;{{number_format($after_discount,2)}}</span><s>&#8358;{{number_format($product_detail->price,2)}}</s> </p>
 												<p class="description">{!!($product_detail->summary)!!}</p>
 											</div>
 											<!--/ End Description -->
@@ -141,7 +142,11 @@
 													<!--/ End Input Order -->
 													</div>
 													<div class="add-to-cart mt-4">
-														<button type="submit" class="btn">Add to cart</button>
+														@if($product_detail->userDetails['phone_number'])
+														<a href="{{ route('redirect-to-whatsapp', ['userId' => $product_detail->user['id'], 'productSlug' => $product_detail->slug]) }}" class="btn btn-primary">Chat on WhatsApp</a>
+														@endif
+
+														{{-- <button type="submit" class="btn">Add to cart</button> --}}
 														<a href="{{route('add-to-wishlist',$product_detail->slug)}}" class="btn min"><i class="ti-heart"></i></a>
 													</div>
 												</form>
@@ -151,6 +156,15 @@
 												<p class="cat mt-1">Sub Category :<a href="{{route('product-sub-cat',[$product_detail->cat_info['slug'],$product_detail->sub_cat_info['slug']])}}">{{$product_detail->sub_cat_info['title']}}</a></p>
 												@endif
 												<p class="availability">Stock : @if($product_detail->stock>0)<span class="badge badge-success">{{$product_detail->stock}}</span>@else <span class="badge badge-danger">{{$product_detail->stock}}</span>  @endif</p>
+												<div class="default-social">
+													<h4 class="share-now">Share:</h4>
+													<ul>
+														<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+														<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+														<li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+														<li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
+													</ul>
+												</div>
 											</div>
 											<!--/ End Product Buy -->
 										</div>
@@ -349,8 +363,8 @@
                                             @php 
                                                 $after_discount=($data->price-(($data->discount*$data->price)/100));
                                             @endphp
-                                            <span class="old">&#x20A6;{{number_format($data->price,2)}}</span>
-                                            <span>&#x20A6;{{number_format($after_discount,2)}}</span>
+                                            <span class="old">&#8358;{{number_format($data->price,2)}}</span>
+                                            <span>&#8358;{{number_format($after_discount,2)}}</span>
                                         </div>
                                       
                                     </div>

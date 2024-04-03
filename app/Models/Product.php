@@ -7,10 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Cart;
 class Product extends Model
 {
-    protected $fillable=['title','slug','summary','description','cat_id','child_cat_id','price','brand_id','discount','status','photo','size','stock','is_featured','condition','user_id',];
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+
+    protected $fillable=['title','slug','summary','description','cat_id','child_cat_id','price','brand_id','discount','status','photo','size','stock','is_featured','condition','user_id'];
+
 
     public function cat_info(){
         return $this->hasOne('App\Models\Category','id','cat_id');
+    }
+     public function userDetails()
+    {
+        return $this->belongsTo(UserDetails::class, 'user_id');
     }
     public function user() {
         return $this->belongsTo('App\User', 'user_id')->where('status','active');
@@ -28,7 +37,7 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductReview','product_id','id')->with('user_info')->where('status','active')->orderBy('id','DESC');
     }
     public static function getProductBySlug($slug){
-        return Product::with(['cat_info','rel_prods','getReview', 'user',])->where('slug',$slug)->first();
+        return Product::with(['cat_info','rel_prods','getReview', 'user','userDetails'])->where('slug',$slug)->first();
     }
     public static function countActiveProduct(){
         $data=Product::where('status','active')->count();

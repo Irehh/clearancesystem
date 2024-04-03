@@ -102,11 +102,12 @@
                             </ul>
                             <!--/ End Tab Nav -->
                         </div>
+                        
                         <div class="tab-content isotope-grid" id="myTabContent">
                              <!-- Start Single Tab -->
                             @if($product_lists)
                                 @foreach($product_lists as $key=>$product)
-                                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$product->cat_id}}">
+                                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$product->cat_id}}" style="width: 50%">
                                     <div class="single-product">
                                         <div class="product-img">
                                             <a href="{{route('product-detail',$product->slug)}}">
@@ -134,7 +135,7 @@
                                                     <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
                                                 </div>
                                                 <div class="product-action-2">
-                                                    <a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
+                                                    <a title="Add to cart" href="{{route('add-to-wishlist',$product->slug)}}">Add to wishlist</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,8 +145,8 @@
                                                 @php
                                                     $after_discount=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <span>${{number_format($after_discount,2)}}</span>
-                                                <del style="padding-left:4%;">${{number_format($product->price,2)}}</del>
+                                                <span>&#8358;{{number_format($after_discount,2)}}</span>
+                                                <del style="padding-left:4%;">&#8358;{{number_format($product->price,2)}}</del>
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +175,7 @@
             @if($featured)
                 @foreach($featured as $data)
                     <!-- Single Banner  -->
-                    <div class="col-lg-6 col-md-6 col-12">
+                    <div class="col-lg-6 col-md-6 col-12" style="width: 50%">
                         <div class="single-banner">
                             @php
                                 $photo=explode(',',$data->photo);
@@ -211,7 +212,7 @@
                     @foreach($product_lists as $product)
                         @if($product->condition=='hot')
                             <!-- Start Single Product -->
-                        <div class="single-product">
+                        <div class="single-product" style="width: 50%">
                             <div class="product-img">
                                 <a href="{{route('product-detail',$product->slug)}}">
                                     @php
@@ -228,14 +229,14 @@
                                         <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
                                     </div>
                                     <div class="product-action-2">
-                                        <a href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
+                                        <a href="{{route('add-to-wishlist',$product->slug)}}">Add to wishlist</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="product-content">
                                 <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
                                 <div class="product-price">
-                                    <span class="old">${{number_format($product->price,2)}}</span>
+                                    <span class="old">&#8358;{{number_format($product->price,2)}}</span>
                                     @php
                                     $after_discount=($product->price-($product->price*$product->discount)/100)
                                     @endphp
@@ -270,7 +271,7 @@
                         $product_lists=DB::table('products')->where('status','active')->orderBy('id','DESC')->limit(6)->get();
                     @endphp
                     @foreach($product_lists as $product)
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="width: 50%">
                             <!-- Start Single List  -->
                             <div class="single-list">
                                 <div class="row">
@@ -281,13 +282,14 @@
                                             // dd($photo);
                                         @endphp
                                         <img src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                        <a href="{{route('add-to-cart',$product->slug)}}" class="buy"><i class="fa fa-shopping-bag"></i></a>
+                                        <a href="{{route('add-to-wishlist',$product->slug)}}" class="buy"><i class="fa fa-shopping-bag"></i></a>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-12 no-padding">
                                     <div class="content">
                                         <h4 class="title"><a href="#">{{$product->title}}</a></h4>
-                                        <p class="price with-discount">${{number_format($product->discount,2)}}</p>
+                                        {{-- <p>Added {{ $product->created_at->diffForHumans() }}</p> --}}
+                                        <p class="price with-discount">&#8358;{{number_format($product->discount,2)}}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -344,8 +346,8 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-rocket"></i>
-                    <h4>Free shiping</h4>
-                    <p>Orders over $100</p>
+                    <h4>Zero Listing Fees</h4>
+                    <p>No fees for listing items</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -353,8 +355,8 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-reload"></i>
-                    <h4>Free Return</h4>
-                    <p>Within 30 days returns</p>
+                    <h4>Community</h4>
+                    <p>Student-focused marketplace</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -362,8 +364,8 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-lock"></i>
-                    <h4>Sucure Payment</h4>
-                    <p>100% secure payment</p>
+                    <h4>Campus Deals</h4>
+                    <p>Buy and sell directly within your campus network</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -371,8 +373,8 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-tag"></i>
-                    <h4>Best Peice</h4>
-                    <p>Guaranteed price</p>
+                    <h4>Escrow Services</h4>
+                    <p>Admin-assisted purchases available</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -520,16 +522,15 @@
 
 @push('styles')
     <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f2e5abf393162001291e431&product=inline-share-buttons' async='async'></script>
-    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f2e5abf393162001291e431&product=inline-share-buttons' async='async'></script>
     <style>
         /* Banner Sliding */
         #Gslider .carousel-inner {
-        background: #000000;
+        background: #000000c8;
         color:black;
         }
 
         #Gslider .carousel-inner{
-        height: 550px;
+        /* height: 550px; */
         }
         #Gslider .carousel-inner img{
             width: 100% !important;
@@ -556,6 +557,22 @@
         #Gslider .carousel-indicators {
         bottom: 70px;
         }
+        /* my styling for banner */
+        /* Media query for desktop screens */
+@media only screen and (min-width: 768px) {
+    #Gslider .carousel-inner {
+        height: 500px;
+        /* Add any other styles specific to desktop view */
+    }
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 767px) {
+    #Gslider .carousel-inner {
+        height: auto; /* or any other height value */
+        /* Add any other styles specific to mobile view */
+    }
+}
     </style>
 @endpush
 
