@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','Umart || Login Page')
+@section('title','Login Page')
 
 @section('main-content')
     <!-- Breadcrumbs -->
@@ -10,7 +10,6 @@
                 <div class="col-12">
                     <div class="bread-inner">
                         <ul class="bread-list">
-                            <li><a href="{{route('home')}}">Home<i class="ti-arrow-right"></i></a></li>
                             <li class="active"><a href="javascript:void(0);">Login</a></li>
                         </ul>
                     </div>
@@ -55,8 +54,6 @@
                                         <button class="btn" type="submit">Login</button>
                                         <a href="{{route('register.form')}}" class="btn">Register</a>
                                         OR
-                                        <a href="{{route('login.redirect','facebook')}}" class="btn btn-facebook"><i class="ti-facebook"></i></a>
-                                        <a href="{{route('login.redirect','github')}}" class="btn btn-github"><i class="ti-github"></i></a>
                                         <a href="{{route('login.redirect','google')}}" class="btn btn-google"><i class="ti-google"></i></a>
 
                                     </div>
@@ -83,19 +80,6 @@
 <style>
     .shop.login .form .btn{
         margin-right:0;
-    }
-    .btn-facebook{
-        background:#39579A;
-    }
-    .btn-facebook:hover{
-        background:#073088 !important;
-    }
-    .btn-github{
-        background:#444444;
-        color:white;
-    }
-    .btn-github:hover{
-        background:black !important;
     }
     .btn-google{
         background:#ea4335;

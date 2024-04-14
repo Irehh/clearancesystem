@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('review')->nullable();
             $table->enum('status',['active','inactive'])->default('active');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
-            $table->foreign('officer_id')->references('id')->on('')->onDelete('SET NULL');
             $table->timestamps();
         });
     }
