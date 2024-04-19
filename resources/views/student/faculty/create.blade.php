@@ -3,7 +3,7 @@
 @section('main-content')
 
 <div class="card">
-    <h5 class="card-header">Add Product</h5>
+    <h5 class="card-header">Start Faculty Clearance</h5>
     <div class="card-body">
       <form method="post" action="{{route('product.store')}}">
         {{csrf_field()}}
@@ -42,9 +42,9 @@
           <label for="cat_id">Category <span class="text-danger">*</span></label>
           <select name="cat_id" id="cat_id" class="form-control">
               <option value="">--Select any category--</option>
-              @foreach($categories as $key=>$cat_data)
+              {{-- @foreach($categories as $key=>$cat_data)
                   <option value='{{$cat_data->id}}'>{{$cat_data->title}}</option>
-              @endforeach
+              @endforeach --}}
           </select>
         </div>
 
@@ -90,9 +90,9 @@
 
           <select name="brand_id" class="form-control">
               <option value="">--Select Brand--</option>
-             @foreach($brands as $brand)
+             {{-- @foreach($brands as $brand)
               <option value="{{$brand->id}}">{{$brand->title}}</option>
-             @endforeach
+             @endforeach --}}
           </select>
         </div>
 

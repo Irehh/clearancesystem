@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Settings;
-use App\User;
-use App\Rules\MatchOldPassword;
 use Hash;
+use App\User;
 use Carbon\Carbon;
-use Spatie\Activitylog\Models\Activity;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\Settings;
+use Illuminate\Http\Request;
+use App\Models\StudentDocument;
+use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
+use Spatie\Activitylog\Models\Activity;
 
 class StudentController extends Controller
 
@@ -153,4 +154,16 @@ class StudentController extends Controller
         }
         
     }
+    public function facultyfiles()
+    {
+        $studentId = auth()->id();
+    $studentDocuments = StudentDocument::where('student_id', $studentId)->with('document')->get();
+    
+    return view('student.faculty.create', compact('studentDocuments'));
+    }
+
+    public function storeFacultyFiles()
+{
+    
+}
 }

@@ -1,11 +1,11 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('user')}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('faculty')}}">
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
       </div>
-      <div class="sidebar-brand-text mx-3">User</div>
+      <div class="sidebar-brand-text mx-3">faculty</div>
     </a>
 
     <!-- Divider -->
@@ -13,7 +13,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-      <a class="nav-link" href="{{ route('user') }}">
+      <a class="nav-link" href="{{ route('faculty') }}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>
@@ -27,7 +27,7 @@
         </div>
     <!--Orders -->
     <li class="nav-item">
-        <a class="nav-link" href="{{route('user.order.index')}}">
+        <a class="nav-link" href="{{route('faculty.order.index')}}">
             <i class="fas fa-hammer fa-chart-area"></i>
             <span>Orders</span>
         </a>
@@ -42,15 +42,15 @@
       <div id="productCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Product Options:</h6>
-          <a class="collapse-item" href="{{route('user.products.index')}}">Products</a>
-          <a class="collapse-item" href="{{route('user.products.create')}}">Add Product</a>
+          <a class="collapse-item" href="{{route('faculty.products.index')}}">Products</a>
+          <a class="collapse-item" href="{{route('faculty.products.create')}}">Add Product</a>
         </div>
       </div>
   </li>
 
     <!-- Reviews -->
     <li class="nav-item">
-        <a class="nav-link" href="{{route('user.productreview.index')}}">
+        <a class="nav-link" href="{{route('faculty.productreview.index')}}">
             <i class="fas fa-comments"></i>
             <span>Reviews</span></a>
     </li>
@@ -65,7 +65,7 @@
     </div>
     <!-- Comments -->
     <li class="nav-item">
-      <a class="nav-link" href="{{route('user.post-comment.index')}}">
+      <a class="nav-link" href="{{route('faculty.post-comment.index')}}">
           <i class="fas fa-comments fa-chart-area"></i>
           <span>Comments</span>
       </a>

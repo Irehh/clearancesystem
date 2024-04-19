@@ -40,17 +40,39 @@ class FrontendController extends Controller
         return view('frontend.pages.login');
     }
     public function loginSubmit(Request $request){
-        $data= $request->all();
-        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active'])){
-            Session::put('user',$data['email']);
-            request()->session()->flash('success','Successfully login');
-            return redirect()->route('student');
+        $data = $request->all();
+        
+        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 'active'])){
+            $user = Auth::user();
+            // Store user's email in session
+        Session::put('user', $data['email']);
+            
+            // Check user role and redirect accordingly
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->route('admin');
+                case 'faculty':
+                    return redirect()->route('faculty');
+                case 'department':
+                    return redirect()->route('department');
+                case 'security':
+                    return redirect()->route('security');
+                case 'alumni':
+                    return redirect()->route('alumni');
+                case 'library':
+                    return redirect()->route('library');
+                case 'hostel':
+                    return redirect()->route('hostel');
+                default:
+                    return redirect()->route('student'); // Or any other default route
+            }
         }
         else{
             request()->session()->flash('error','Invalid email and password please try again!');
             return redirect()->back();
         }
     }
+    
 
     public function logout(){
         Session::forget('user');

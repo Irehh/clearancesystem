@@ -164,8 +164,9 @@ use Illuminate\Support\Facades\Auth;
         })->name('file-manager');
         // user route
         Route::resource('users', 'UsersController');
-        // Banner
-        Route::resource('banner', 'BannerController');
+        //faculty
+        Route::get('/faculty/create', 'StudentController@facultyfiles')->name('faculty.create');
+        Route::post('/faculty', 'StudentController@storefacultyfiles')->name('faculty.store');
         // Brand
         Route::resource('brand', 'BrandController');
         // Profile
@@ -207,6 +208,46 @@ use Illuminate\Support\Facades\Auth;
         Route::post('change-password', 'AdminController@changPasswordStore')->name('change.password');
     });
     
+    Route::group(['prefix' => '/faculty', 'middleware' => ['auth', 'role:faculty']], function () {
+        // Routes accessible to users with 'faculty' role
+        Route::get('/', 'FacultyController@index')->name('faculty');
+        // Profile
+        Route::get('/profile', 'HomeController@profile')->name('user-profile');
+        Route::post('/profile', 'UserController@profileUpdate')->name('faculty.profile.update');
+        //  Order
+        Route::get('/order', "HomeController@orderIndex")->name('faculty.order.index');
+        Route::get('/order/show/{id}', "HomeController@orderShow")->name('faculty.order.show');
+        Route::delete('/order/delete/{id}', 'HomeController@userOrderDelete')->name('faculty.order.delete');
+        // Product
+        Route::post('/products', 'UserProductController@store')->name('faculty.products.store');
+        Route::get('/products', 'UserProductController@index')->name('faculty.products.index');
+        Route::get('/products/create', 'UserProductController@create')->name('faculty.products.create');
+        Route::get('/products/{id}/edit', 'UserProductController@edit')->name('faculty.products.edit');
+        Route::put('/products/{id}', 'UserProductController@update')->name('faculty.products.update');
+        Route::delete('/products/{id}', 'UserProductController@destroy')->name('faculty.products.destroy');
+        
+        
+        // Product Review
+        Route::get('/user-review', 'HomeController@productReviewIndex')->name('user.productreview.index');
+        Route::delete('/user-review/delete/{id}', 'HomeController@productReviewDelete')->name('user.productreview.delete');
+        Route::get('/user-review/edit/{id}', 'HomeController@productReviewEdit')->name('user.productreview.edit');
+        Route::patch('/user-review/update/{id}', 'HomeController@productReviewUpdate')->name('user.productreview.update');
+
+        // Post comment
+        Route::get('user-post/comment', 'HomeController@userComment')->name('user.post-comment.index');
+        Route::delete('user-post/comment/delete/{id}', 'HomeController@userCommentDelete')->name('user.post-comment.delete');
+        Route::get('user-post/comment/edit/{id}', 'HomeController@userCommentEdit')->name('user.post-comment.edit');
+        Route::patch('user-post/comment/udpate/{id}', 'HomeController@userCommentUpdate')->name('user.post-comment.update');
+
+        // Password Change
+        Route::get('change-password', 'HomeController@changePassword')->name('user.change.password.form');
+        Route::post('change-password', 'HomeController@changPasswordStore')->name('change.password');
+
+        // Ajax for sub category
+        Route::post('/category/{id}/child', 'HomeController@getChildByParent');
+        
+        
+    });
     
 
    
