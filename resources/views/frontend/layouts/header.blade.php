@@ -11,20 +11,26 @@
                     <!-- Top Right -->
                     <div class="right-content">
                         <ul class="list-main">
-                            {{-- <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> --}}
                             @auth 
-                                @if(Auth::user()->role=='student')
-                                    <li><i class="ti-user"></i> <a href="{{route('student')}}"  target="_blank">Student Dashboard</a></li>
-                                @elseif(Auth::user()->role == 'faculty')
-                                    <li><i class="ti-user"></i> <a href="{{ route('faculty') }}" target="_blank">Faculty Dashboard</a></li>
-                                @else 
-                                    <li><i class="ti-user"></i> <a href="{{route('admin')}}"  target="_blank">Admin Dashboard</a></li>
-                                @endif
-                                <li><i class="ti-power-off"></i> <a href="{{route('user.logout')}}">Logout</a></li>
-
-                            @else
-                                <li><i class="ti-power-off"></i><a href="{{route('login.form')}}">Login /</a> <a href="{{route('register.form')}}">Register</a></li>
-                            @endauth
+                            @if(Auth::user()->role == 'student')
+                                <li><i class="ti-user"></i> <a href="{{ route('student') }}">Student Dashboard</a></li>
+                            @elseif(Auth::user()->role == 'faculty')
+                                <li><i class="ti-user"></i> <a href="{{ route('faculty') }}">Faculty Dashboard</a></li>
+                            @elseif(Auth::user()->role == 'admin')
+                                <li><i class="ti-user"></i> <a href="{{ route('admin') }}">Admin Dashboard</a></li>
+                            @elseif(Auth::user()->role == 'security')
+                                <li><i class="ti-user"></i> <a href="{{ route('security') }}">Security Dashboard</a></li>
+                            @elseif(Auth::user()->role == 'alumni')
+                                <li><i class="ti-user"></i> <a href="{{ route('alumni') }}">Alumni Dashboard</a></li>
+                            @elseif(Auth::user()->role == 'department')
+                                <li><i class="ti-user"></i> <a href="{{ route('department') }}">Department Dashboard</a></li>
+                            @else 
+                                <li><i class="ti-user"></i> <a href="{{ route('user') }}">Guest Dashboard</a></li> <!-- You can define a 'user' route or use any other default route -->
+                            @endif
+                            <li><i class="ti-power-off"></i> <a href="{{ route('user.logout') }}">Logout</a></li>
+                        @else
+                            <li><i class="ti-power-off"></i><a href="{{ route('login.form') }}">Login /</a> <a href="{{ route('register.form') }}">Register</a></li>
+                        @endauth
                         </ul>
                     </div>
                     <!-- End Top Right -->

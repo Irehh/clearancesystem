@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Umart || DASHBOARD')
+@section('title','CLEARANCE || DASHBOARD')
 @section('main-content')
 <div class="container-fluid">
     @include('backend.layouts.notification')
@@ -18,7 +18,7 @@
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Category</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{\App\Models\Category::countActiveCategory()}}</div>
+                {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{\App\Models\Category::countActiveCategory()}}</div> --}}
               </div>
               <div class="col-auto">
                 <i class="fas fa-sitemap fa-2x text-gray-300"></i>
@@ -35,7 +35,7 @@
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Products</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{\App\Models\Product::countActiveProduct()}}</div>
+                {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{\App\Models\Product::countActiveProduct()}}</div> --}}
               </div>
               <div class="col-auto">
                 <i class="fas fa-cubes fa-2x text-gray-300"></i>
@@ -54,7 +54,7 @@
                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Order</div>
                 <div class="row no-gutters align-items-center">
                   <div class="col-auto">
-                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{\App\Models\Order::countActiveOrder()}}</div>
+                    {{-- <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{\App\Models\Order::countActiveOrder()}}</div> --}}
                   </div>
                   
                 </div>
@@ -74,7 +74,7 @@
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Post</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{\App\Models\Post::countActivePost()}}</div>
+                {{-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{\App\Models\Post::countActivePost()}}</div> --}}
               </div>
               <div class="col-auto">
                 <i class="fas fa-folder fa-2x text-gray-300"></i>

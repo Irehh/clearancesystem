@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Student;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -36,16 +37,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function orders(){
-        return $this->hasMany('App\Models\Order');
+    public function clearancerequest(){
+        return $this->hasMany('App\Models\ClearanceRequest');
     }
 
     public function userdetails(){
         return $this->hasOne('App\Models\UserDetails');
     }
 
-    public function products(){
-        return $this->hasMany('App\Models\Product', 'user_id'); // 'user_id' is the foreign key column name
+    public function student()
+    {
+        return $this->hasMany(Student::class, 'student_id');
+    }
+    public function getStudent()
+    {
+        return Student::with(['studentDocuments', 'user'])->first();
     }
 
     public static function getUserBySlug($slug){

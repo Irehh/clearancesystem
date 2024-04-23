@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +18,7 @@ class UsersController extends Controller
      //admin controls this controller
     public function index()
     {
-        $users=User::orderBy('id','ASC')->paginate(10);
+        $users=Student::orderBy('id','ASC')->paginate(10);
         return view('backend.users.index')->with('users',$users);
     }
 

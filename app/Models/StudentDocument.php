@@ -2,22 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Student;
+use App\Models\Document;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StudentDocument extends Model
 {
     use HasFactory;
+    protected $table = 'student_documents'; 
 
-    protected $fillable = ['student_id', 'document_id', 'file_path','status','description',];
+    protected $fillable = ['student_id', 'document_id', 'file_path'];
 
     public function document()
 {
-    return $this->belongsTo(Document::class);
+    return $this->belongsTo(Document::class, 'document_id');
 }
 
 public function student()
 {
-    return $this->belongsTo(Students::class);
+    return $this->belongsTo(Student::class);
 }
+
 }

@@ -1,11 +1,11 @@
-@extends('backend.layouts.master')
+@extends('student.layouts.master')
 
 @section('main-content')
 
 <div class="card">
     <h5 class="card-header">Start Faculty Clearance</h5>
     <div class="card-body">
-      <form method="post" action="{{route('product.store')}}">
+      <form method="post" action="{{route('faculty.store')}}">
         {{csrf_field()}}
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
