@@ -11,6 +11,7 @@
         {{csrf_field()}}
         <h6>Course Reg</h6>
         @foreach($requiredDocuments as $document)
+        {{-- @if ($document->status == 'inactive') --}}
           <div class="form-group">
             <div class="input-group">
               <label>{{ $document->name }}</label>
@@ -29,6 +30,7 @@
                 <span class="text-danger">{{$message}}</span>
                 @enderror
           </div>
+          {{-- @endif --}}
         @endforeach
      
         <hr class="my-4">

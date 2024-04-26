@@ -21,7 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('slug')->unique()->nullable();
             $table->string('photo')->nullable();
-            $table->enum('role',['admin','student','faculty','department','alumni','security','clearanceofficer'])->default('student');
+            $table->enum('role',['admin','student','faculty','department','alumni','security','clearanceofficer','hostel'])->default('student');
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->unsignedBigInteger('faculty_id')->nullable();
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->enum('status',['active','inactive'])->default('active');
@@ -40,3 +42,7 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
     }
 }
+
+
+             
+             

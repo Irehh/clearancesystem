@@ -4,12 +4,6 @@
     <button id="sidebarToggleTop" class="btn btn-link  rounded-circle mr-3">
       <i class="fa fa-bars"></i>
     </button>
-    <a href="{{route('storage.link')}}"  class="btn btn-outline-warning btn-sm mr-3">
-        Storage Link
-    </a>
-    <a href="{{route('cache.clear')}}"  class="btn btn-outline-danger btn-sm mr-3">
-      Cache Clear
-    </a>
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -42,17 +36,6 @@
           <i class="fas fa-home fa-fw"></i>
         </a>
       </li>
-
-      <!-- Nav Item - Alerts -->
-      <li class="nav-item dropdown no-arrow mx-1">
-       @include('student.notification.show')
-      </li>
-
-      <!-- Nav Item - Messages -->
-      <li class="nav-item dropdown no-arrow mx-1" id="messageT" data-url="{{route('messages.five')}}">
-        @include('student.message.message')
-      </li>
-
       <div class="topbar-divider d-none d-sm-block"></div>
 
       <!-- Nav Item - User Information -->
@@ -67,17 +50,13 @@
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="{{route('admin-profile')}}">
+          <a class="dropdown-item" href="{{route('student-profile')}}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             Profile
           </a>
-          <a class="dropdown-item" href="{{route('change.password.form')}}">
+          <a class="dropdown-item" href="{{route('change.password.student-form')}}">
             <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
             Change Password
-          </a>
-          <a class="dropdown-item" href="{{route('settings')}}">
-            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-            Settings
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ route('logout') }}"

@@ -157,12 +157,18 @@
                                   @endif
                               </td>
                               <td>
-                              
-                                  <form method="POST" action="{{ route('faculty.document.delete', [$document->id]) }}">
-                                      @csrf 
-                                      @method('delete')
-                                      <button class="btn btn-danger btn-sm dltBtn" data-id="{{ $document->id }}" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                
+                                  <form method="POST" action="{{ route('faculty.document.updateStatus', [$document->id]) }}">
+                                      @csrf
+                                      @method('put')
+                                      <button type="submit" class="btn btn-success btn-sm" style="height:30px; width:30px; border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Mark as Active"><i class="fas fa-check"></i></button>
                                   </form>
+                                  <form method="POST" action="{{ route('faculty.document.save', [$document->id]) }}">
+                                      @csrf
+                                      @method('put')
+                                      <button type="submit" class="btn btn-primary btn-sm" style="height:30px; width:30px; border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Save Document"><i class="fas fa-save"></i></button>
+                                  </form>
+                              
                               </td>
                           </tr>
                       @endforeach

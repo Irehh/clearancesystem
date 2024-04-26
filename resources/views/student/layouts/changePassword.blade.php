@@ -1,4 +1,4 @@
-@extends('backend.layouts.master')
+@extends('student.layouts.master')
 @section('main-content')
 <div class="container">
     <div class="row">
@@ -7,7 +7,7 @@
                 <div class="card-header">Change Password</div>
    
                 <div class="card-body">
-                    <form method="POST" action="{{ route('change.password') }}">
+                    <form method="POST" action="{{ route('password.change') }}">
                         @csrf 
    
                          @foreach ($errors->all() as $error)

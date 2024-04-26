@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\User;
-class UsersController extends Controller
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+class ClearanceOfficersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,14 @@ class UsersController extends Controller
      */
 
      //admin controls this controller
-    public function index()
-    {
-        $users= Student::orderBy('id','ASC')->paginate(10);
-        return view('backend.users.index')->with('users',$users);
-    }
+     public function index()
+     {
+         $officers = User::where('role', '<>', 'student')
+                         ->orderBy('id', 'ASC')
+                         ->paginate(10);
+         
+         return view('backend.officers.index')->with('officers', $officers);
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +32,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('backend.users.create');
+        return view('backend.officers.create');
     }
 
     /**
@@ -45,12 +48,19 @@ class UsersController extends Controller
             'name'=>'string|required|max:30',
             'email'=>'string|required|unique:users',
             'password'=>'string|required',
-            'role'=>'required|in:admin,user',
+            'role'=>'required|in:admin,user,faculty,department,hostel.security,alumni',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
         ]);
         // dd($request->all());
         $data=$request->all();
+        $slug = Str::slug($data['name']);
+        // Ensure slug uniqueness
+        $count = User::where('slug', $slug)->count();
+        if ($count > 0) {
+            $slug = $slug . '-' . ($count + 1); // Append a number to make it unique
+        }
+        $data['slug'] = $slug; // Add the slug to the data array
         $data['password']=Hash::make($request->password);
         // dd($data);
         $status=User::create($data);
@@ -61,7 +71,7 @@ class UsersController extends Controller
         else{
             request()->session()->flash('error','Error occurred while adding user');
         }
-        return redirect()->route('users.index');
+        return redirect()->route('officers.index');
 
     }
 
@@ -85,7 +95,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user=User::findOrFail($id);
-        return view('backend.users.edit')->with('user',$user);
+        return view('backend.officers.edit')->with('user',$user);
     }
 
     /**
@@ -119,7 +129,7 @@ class UsersController extends Controller
         else{
             request()->session()->flash('error','Error occured while updating');
         }
-        return redirect()->route('users.index');
+        return redirect()->route('officers.index');
 
     }
 
@@ -137,8 +147,8 @@ class UsersController extends Controller
             request()->session()->flash('success','User Successfully deleted');
         }
         else{
-            request()->session()->flash('error','There is an error while deleting users');
+            request()->session()->flash('error','There is an error while deleting officers');
         }
-        return redirect()->route('users.index');
+        return redirect()->route('officers.index');
     }
 }

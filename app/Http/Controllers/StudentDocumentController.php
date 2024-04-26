@@ -18,8 +18,9 @@ class StudentDocumentController extends Controller
      */
     public function index()
     {
-        $banner=StudentDocument::orderBy('id','DESC')->paginate(10);
-        return view('student.document.index')->with('banners',$banner);
+        $studentId = auth()->user()->id;
+        $document=StudentDocument::orderBy('id','DESC')->where('student_id',$studentId)->paginate(10);
+        return view('student.document.index')->with('documents',$document);
     }
 
     /**
@@ -72,8 +73,8 @@ class StudentDocumentController extends Controller
      */
     public function edit($id)
     {
-        $banner=Banner::findOrFail($id);
-        return view('backend.banner.edit')->with('banner',$banner);
+        $document=document::findOrFail($id);
+        return view('backend.document.edit')->with('document',$document);
     }
 
     /**
@@ -85,7 +86,7 @@ class StudentDocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $banner=Banner::findOrFail($id);
+        $document=document::findOrFail($id);
         $this->validate($request,[
             'title'=>'string|required|max:50',
             'description'=>'string|nullable',
@@ -94,20 +95,20 @@ class StudentDocumentController extends Controller
         ]);
         $data=$request->all();
         // $slug=Str::slug($request->title);
-        // $count=Banner::where('slug',$slug)->count();
+        // $count=document::where('slug',$slug)->count();
         // if($count>0){
         //     $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         // }
         // $data['slug']=$slug;
         // return $slug;
-        $status=$banner->fill($data)->save();
+        $status=$document->fill($data)->save();
         if($status){
-            request()->session()->flash('success','Banner successfully updated');
+            request()->session()->flash('success','document successfully updated');
         }
         else{
-            request()->session()->flash('error','Error occurred while updating banner');
+            request()->session()->flash('error','Error occurred while updating document');
         }
-        return redirect()->route('banner.index');
+        return redirect()->route('document.index');
     }
 
     /**
@@ -118,14 +119,14 @@ class StudentDocumentController extends Controller
      */
     public function destroy($id)
     {
-        $banner=Banner::findOrFail($id);
-        $status=$banner->delete();
+        $document=document::findOrFail($id);
+        $status=$document->delete();
         if($status){
-            request()->session()->flash('success','Banner successfully deleted');
+            request()->session()->flash('success','document successfully deleted');
         }
         else{
-            request()->session()->flash('error','Error occurred while deleting banner');
+            request()->session()->flash('error','Error occurred while deleting document');
         }
-        return redirect()->route('banner.index');
+        return redirect()->route('document.index');
     }
 }

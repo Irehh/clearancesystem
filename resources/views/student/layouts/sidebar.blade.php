@@ -43,7 +43,7 @@
     <hr class="sidebar-divider">
         <!-- Heading -->
         <div class="sidebar-heading">
-            Shop
+            Clearance
         </div>
 
     <!-- Categories -->
@@ -56,14 +56,14 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Submit Files:</h6>
             <a class="collapse-item" href="{{route('faculty.create')}}">Start Clearance</a>
-            <a class="collapse-item" href="{{route('category.create')}}">Add Category</a>
+            <a class="collapse-item" href="">Add Category</a>
           </div>
         </div>
     </li>
 
     <!--Orders -->
     <li class="nav-item">
-        <a class="nav-link" href="{{route('order.index')}}">
+        <a class="nav-link" href="">
             <i class="fas fa-hammer fa-chart-area"></i>
             <span>Security Clearance</span>
         </a>
@@ -71,7 +71,7 @@
 
     <!-- Reviews -->
     <li class="nav-item">
-        <a class="nav-link" href="{{route('review.index')}}">
+        <a class="nav-link" href="">
             <i class="fas fa-comments"></i>
             <span>Alumni Clearance</span></a>
     </li>

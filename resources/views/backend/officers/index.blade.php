@@ -9,8 +9,8 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Users List</h6>
-      <a href="{{route('users.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>
+      <h6 class="m-0 font-weight-bold text-primary float-left">Officers List</h6>
+      <a href="{{route('officers.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -19,32 +19,32 @@
             <tr>
               <th>S.N.</th>
               <th>Name</th>
-              <th>Reg.No</th>
+              <th>Role</th>
               <th>Photo</th>
-              <th>Level</th>
-              <th>Department</th>
+              <th>Faculty ID</th>
+              <th>Department ID</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tfoot>
             <tr>
-                <th>S.N.</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Photo</th>
-                <th>Join Date</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Action</th>
+              <th>S.N.</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Photo</th>
+              <th>Faculty ID</th>
+              <th>Department ID</th>
+              <th>Status</th>
+              <th>Action</th>
               </tr>
           </tfoot>
           <tbody>
-            @foreach($users as $user)   
+            @foreach($officers as $user)   
                 <tr>
                     <td>{{$user->id}}</td>
-                    <td>{{$user->first_name}}</td>
-                    <td>{{$user->registration_number}}</td>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->role}}</td>
                     <td>
                         @if($user->photo)
                             <img src="{{$user->photo}}" class="img-fluid rounded-circle" style="max-width:50px" alt="{{$user->photo}}">
@@ -52,14 +52,14 @@
                             <img src="{{asset('backend/img/avatar.png')}}" class="img-fluid rounded-circle" style="max-width:50px" alt="avatar.png">
                         @endif
                     </td>
-                    <td>{{ $user->level }}</td>
-                    <td>{{$user->department}}</td>
+                    <td>{{ $user->faculty_id }}</td>
+                    <td>{{$user->department_id}}</td>
                     <td>
-                        {{$user->phone_no}}
+                        {{$user->role}}
                     </td>
                     <td>
-                        <a href="{{route('users.edit',$user->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                    <form method="POST" action="{{route('users.destroy',[$user->id])}}">
+                        <a href="{{route('officers.edit',$user->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                    <form method="POST" action="{{route('officers.destroy',[$user->id])}}">
                       @csrf 
                       @method('delete')
                           <button class="btn btn-danger btn-sm dltBtn" data-id={{$user->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
@@ -76,7 +76,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <form method="post" action="{{ route('users.destroy',$user->id) }}">
+                              <form method="post" action="{{ route('officers.destroy',$user->id) }}">
                                 @csrf 
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger" style="margin:auto; text-align:center">Parmanent delete user</button>
@@ -89,7 +89,7 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$users->links()}}</span>
+        <span style="float:right">{{$officers->links()}}</span>
       </div>
     </div>
 </div>

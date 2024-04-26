@@ -23,11 +23,11 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Shop
+            Check
         </div>
     <!--Orders -->
     <li class="nav-item">
-        <a class="nav-link" href="{{route('order.index')}}">
+        <a class="nav-link" href="">
             <i class="fas fa-hammer fa-chart-area"></i>
             <span>Students</span>
         </a>

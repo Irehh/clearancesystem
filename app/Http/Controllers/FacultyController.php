@@ -45,22 +45,48 @@ class FacultyController extends Controller
         return view('faculty.users.profile')->with("user",$user);
     }
 
-    public function clearStudent(Request $request, $student_id)
-{
-    // Find the student
-    $student = Student::findOrFail($student_id);
+        public function clearStudent(Request $request, $student_id)
+    {
+        // Find the student
+        $student = Student::findOrFail($student_id);
 
-    // Get the selected clearance status from the form
-    $clearanceStatus = $request->input('clearance_status');
+        // Get the selected clearance status from the form
+        $clearanceStatus = $request->input('clearance_status');
 
-    // Create or update the clearance request for the student with the selected status
-    $clearanceRequest = ClearanceRequest::updateOrCreate(
-        ['student_id' => $student_id],
-        ['faculty' => $clearanceStatus]
-    );
+        // Create or update the clearance request for the student with the selected status
+        $clearanceRequest = ClearanceRequest::updateOrCreate(
+            ['student_id' => $student_id],
+            ['faculty' => $clearanceStatus]
+        );
 
-    // Redirect back with a success message
-    return redirect()->back()->with('success', 'Student clearance status updated successfully.');
-}
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Student clearance status updated successfully.');
+    }
+
+    public function documentShow($id)
+    {
+        $document=StudentDocument::find($id);
+        // return $document;
+        return view('faculty.document.show')->with('document',$document);
+    }
+
+        public function updateDocumentStatus($id)
+    {
+        // Find the document by its ID
+        $document = StudentDocument::findOrFail($id);
+
+        // Update the status of the document to "active"
+        $document->status = 'active';
+
+        // Save the changes
+        $document->save();
+
+        // Optionally, you can also perform additional actions such as downloading or displaying a success message
+        
+        // Redirect back to the previous page or any other desired route
+        return redirect()->back()->with('success', 'Document status updated to active successfully.');
+    }
+
+
 
 }

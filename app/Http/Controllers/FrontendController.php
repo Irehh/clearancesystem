@@ -6,18 +6,9 @@ use Auth;
 use Hash;
 use Session;
 use App\User;
-use App\Models\Cart;
-use App\Models\Post;
-use App\Models\Brand;
-use App\Models\Banner;
-use App\Models\PostTag;
-use App\Models\Product;
-use App\Models\Category;
+
 use Illuminate\Support\Str;
-use App\Models\PostCategory;
 use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
-use Spatie\Newsletter\Facades\Newsletter;
 
 class FrontendController extends Controller
 {
@@ -26,6 +17,12 @@ class FrontendController extends Controller
     } 
     public function index(Request $request){
         return redirect()->route($request->user()->role);
+    }
+    public function contact(){
+        return view('frontend.pages.contact');
+    }
+    public function aboutUs(){
+        return view('frontend.pages.about-us');
     }
     // Login
     public function login(){
@@ -101,7 +98,7 @@ class FrontendController extends Controller
             return redirect()->route('home');
         } else {
             request()->session()->flash('error', 'Please try again!');
-            return back();
+            return view('frontend.pages.register');
         }
     }
 

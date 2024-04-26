@@ -10,17 +10,17 @@
      </div>
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary float-left">Document List</h6>
-      <a href="{{route('document.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Banner</a>
+      <a href="{{route('document.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add document</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        @if(count($banners)>0)
-        <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
+        @if(count($documents)>0)
+        <table class="table table-bordered" id="document-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>S.N.</th>
-              <th>Title</th>
-              <th>Slug</th>
+              <th>I.D</th>
+              <th>Name</th>
+              <th>Describe</th>
               <th>Photo</th>
               <th>Status</th>
               <th>Action</th>
@@ -28,40 +28,40 @@
           </thead>
           <tfoot>
             <tr>
-              <th>S.N.</th>
-              <th>Title</th>
-              <th>Slug</th>
+              <th>I.D</th>
+              <th>Name</th>
+              <th>Describe</th>
               <th>Photo</th>
               <th>Status</th>
               <th>Action</th>
               </tr>
           </tfoot>
           <tbody>
-            @foreach($banners as $banner)   
+            @foreach($documents as $document)   
                 <tr>
-                    <td>{{$banner->id}}</td>
-                    <td>{{$banner->title}}</td>
-                    <td>{{$banner->slug}}</td>
+                    <td>{{$document->id}}</td>
+                    <td>{{$document->name}}</td>
+                    <td>{{$document->description}}</td>
                     <td>
-                        @if($banner->file_path)
-                            <img src="{{$banner->file_path}}" class="img-fluid zoom" style="max-width:80px" alt="{{$banner->photo}}">
+                        @if($document->file_path)
+                            <img src="{{$document->file_path}}" class="img-fluid zoom" style="max-width:80px" alt="{{$document->photo}}">
                         @else
                             <img src="{{asset('backend/img/thumbnail-default.jpg')}}" class="img-fluid zoom" style="max-width:100%" alt="avatar.png">
                         @endif
                     </td>
                     <td>
-                        @if($banner->status=='active')
-                            <span class="badge badge-success">{{$banner->status}}</span>
+                        @if($document->status=='active')
+                            <span class="badge badge-success">{{$document->status}}</span>
                         @else
-                            <span class="badge badge-warning">{{$banner->status}}</span>
+                            <span class="badge badge-warning">{{$document->status}}</span>
                         @endif
                     </td>
                     <td>
-                        <a href="{{route('banner.edit',$banner->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                        <form method="POST" action="{{route('banner.destroy',[$banner->id])}}">
+                        <a href="{{route('document.edit',$document->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                        <form method="POST" action="{{route('document.destroy',[$document->id])}}">
                           @csrf 
                           @method('delete')
-                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$banner->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$document->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                     {{-- Delete Modal --}}
@@ -75,7 +75,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <form method="post" action="{{ route('banners.destroy',$user->id) }}">
+                              <form method="post" action="{{ route('documents.destroy',$user->id) }}">
                                 @csrf 
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger" style="margin:auto; text-align:center">Parmanent delete user</button>
@@ -88,9 +88,9 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$banners->links()}}</span>
+        <span style="float:right">{{$documents->links()}}</span>
         @else
-          <h6 class="text-center">No banners found!!! Please create banner</h6>
+          <h6 class="text-center">No documents found!!! Please create document</h6>
         @endif
       </div>
     </div>
@@ -125,7 +125,7 @@
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
       
-      $('#banner-dataTable').DataTable( {
+      $('#document-dataTable').DataTable( {
             "columnDefs":[
                 {
                     "orderable":false,

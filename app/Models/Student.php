@@ -10,10 +10,10 @@ class Student extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'student_id', 'registration_number'];
+        'student_id', 'registration_number','level'];
     
     public function clearancerequest(){
-        return $this->hasMany('App\Models\Document');
+        return $this->hasOne('App\Models\Document');
     }
 
     public function user()

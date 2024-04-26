@@ -103,8 +103,8 @@
                 <div class="form-group">
                     <label for="clearance_status">Select Clearance Status:</label>
                     <select class="form-control" id="clearance_status" name="clearance_status">
-                        <option value="approved">Approved</option>
                         <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
                         <option value="rejected">Rejected</option>
                     </select>
                 </div>

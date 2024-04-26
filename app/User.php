@@ -49,9 +49,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Student::class, 'student_id');
     }
-    public function getStudent()
+    public static function getStudent()
     {
-        return Student::with(['studentDocuments', 'user'])->first();
+        return self::with('student');
+        // return Student::with(['student']);
     }
 
     public static function getUserBySlug($slug){
