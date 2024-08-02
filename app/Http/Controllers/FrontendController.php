@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 use DB;
-use Auth;
 use Hash;
-use Session;
 use App\User;
-
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class FrontendController extends Controller
 {
@@ -33,7 +33,7 @@ class FrontendController extends Controller
         
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 'active'])){
             $user = Auth::user();
-            // Store user's email in session
+            //  user's email in session
         Session::put('user', $data['email']);
             
             // Check user role and redirect accordingly
@@ -58,7 +58,7 @@ class FrontendController extends Controller
         }
         else{
             request()->session()->flash('error','Invalid email and password please try again!');
-            return redirect()->back();
+            return redirect()->route('login.form');
         }
     }
     
@@ -79,7 +79,7 @@ class FrontendController extends Controller
         $this->validate($request, [
             'name' => 'string|required|min:2',
             'email' => 'string|required|unique:users,email',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:3|confirmed',
         ]);
 
         $data = $request->all();
@@ -98,7 +98,8 @@ class FrontendController extends Controller
             return redirect()->route('home');
         } else {
             request()->session()->flash('error', 'Please try again!');
-            return view('frontend.pages.register');
+            return redirect()->route('register.form');
+            
         }
     }
 

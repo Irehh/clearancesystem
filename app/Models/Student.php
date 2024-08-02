@@ -10,17 +10,20 @@ class Student extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'student_id', 'registration_number','level'];
+        'student_id', 'registration_number','level','first_name', 'last_name','faculty_id', 'department_id'];
     
-    public function clearancerequest(){
-        return $this->hasOne('App\Models\Document');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-    public function studentDocuments(){
-        return $this->hasMany('App\Models\StudentDocument');
-    }
+        public function clearancerequest()
+        {
+            return $this->hasOne(ClearanceRequest::class);
+        }
+    
+        public function user()
+        {
+            return $this->belongsTo(User::class, 'student_id');
+        }
+    
+        public function studentDocuments()
+        {
+            return $this->hasMany(StudentDocument::class, 'student_id');
+        }
 }

@@ -33,8 +33,9 @@ class FacultyController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-
+    
     public function index(){
+        
         return view('faculty.index');
     }
 
@@ -80,11 +81,37 @@ class FacultyController extends Controller
 
         // Save the changes
         $document->save();
-
-        // Optionally, you can also perform additional actions such as downloading or displaying a success message
         
         // Redirect back to the previous page or any other desired route
         return redirect()->back()->with('success', 'Document status updated to active successfully.');
+    }
+    public function updateDocumentInactive($id)
+    {
+        // Find the document by its ID
+        $document = StudentDocument::findOrFail($id);
+
+        // Update the status of the document to "active"
+        $document->status = 'inactive';
+
+        // Save the changes
+        $document->save();
+        
+        // Redirect back to the previous page or any other desired route
+        return redirect()->back()->with('success', 'Document status updated to inactive successfully.');
+    }
+
+    public function profileUpdate(Request $request,$id){
+        // return $request->all();
+        $user=User::findOrFail($id);
+        $data=$request->all();
+        $status=$user->fill($data)->save();
+        if($status){
+            request()->session()->flash('success','Successfully updated your profile');
+        }
+        else{
+            request()->session()->flash('error','Please try again!');
+        }
+        return redirect()->back();
     }
 
 

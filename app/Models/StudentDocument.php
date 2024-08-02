@@ -15,13 +15,20 @@ class StudentDocument extends Model
     protected $fillable = ['student_id', 'document_id', 'file_path'];
 
     public function document()
-{
-    return $this->belongsTo(Document::class, 'document_id');
-}
+    {
+        return $this->belongsTo(Document::class, 'document_id');
+    }
 
-public function student()
-{
-    return $this->belongsTo(Student::class);
-}
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
+    }
+
+    public static function getStudentDocuments()
+    {
+        return static::with(['student', 'document']);
+    }
+
+
 
 }

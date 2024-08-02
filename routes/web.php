@@ -53,6 +53,7 @@ use App\Http\Controllers\FrontendController;
     Route::get('/home', 'FrontendController@index');
     Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
     Route::post('/contact/message', [MessageController::class, 'store'])->name('contact.store');
+    
 
 
 
@@ -60,7 +61,7 @@ use App\Http\Controllers\FrontendController;
 
 // Backend section start
 
-    Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], function () {
+    Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin','inactive']], function () {
         // Routes accessible to users with 'admin' role
         Route::get('/', 'AdminController@index')->name('admin');
         Route::get('/file-manager', function () {
@@ -73,6 +74,9 @@ use App\Http\Controllers\FrontendController;
         // Profile
         Route::get('/profile', 'AdminController@profile')->name('admin-profile');
         Route::post('/profile/{id}', 'AdminController@profileUpdate')->name('profile-update');
+         // document
+         Route::get('document', 'AdminController@document')->name('document');
+         Route::post('document/update', 'AdminController@documentUpdate')->name('document.update');
 
              // Message
              Route::resource('/message', 'MessageController');
@@ -103,10 +107,15 @@ use App\Http\Controllers\FrontendController;
         // Profile
         Route::get('/profile', 'StudentController@profile')->name('student-profile');
         Route::post('/profile/{id}', 'StudentController@profileUpdate')->name('update.profile');
+        Route::get('/restricted', function () {
+            return view('restricted.index');
+        });
     
         // Password Change
         Route::get('change-password', 'StudentController@changePassword')->name('change.password.student-form');
         Route::post('change-password', 'StudentController@changPasswordStore')->name('password.change');
+        
+        
     });
     
     Route::group(['prefix' => '/faculty', 'middleware' => ['auth', 'role:faculty']], function () {
@@ -114,13 +123,15 @@ use App\Http\Controllers\FrontendController;
         Route::get('/', 'FacultyController@index')->name('faculty');
         // Profile
         Route::get('/profile', [FacultyController::class, 'profile'])->name('user-profile');
-        Route::post('/profile/{id}', [FacultyController::class, 'profileUpdate'])->name('user-profile-update');
+        Route::post('/profile/{id}', [FacultyController::class, 'profileUpdate'])->name('faculty-profile-update');
         //clear
         // web.php
         Route::post('/clearance-request/clear/{student_id}', 'FacultyController@clearStudent')->name('faculty.clearance-request.clear');
         Route::get('/document/show/{id}', "FacultyController@documentShow")->name('faculty.document.show');
         // Update document status to active
         Route::put('/faculty/document/{id}/update-status', 'FacultyController@updateDocumentStatus')->name('faculty.document.updateStatus');
+        // Update document status to inactive
+        Route::put('/faculty/document/{id}/update-status-inactive', 'FacultyController@updateDocumentInactive')->name('faculty.document.inactiveStatus');
 
         // Save document
         Route::put('/faculty/document/{id}/save', 'FacultyController@saveDocument')->name('faculty.document.save');
@@ -133,21 +144,21 @@ use App\Http\Controllers\FrontendController;
         
     });
 
-    // Route::group(['prefix' => '/department', 'middleware' => ['auth', 'role:department']], function () {
-    //     // Routes accessible to users with 'faculty' role
-    //     Route::get('/', 'DepartmentController@index')->name('department');
-    //     Route::post('/clearance-request/clear/{student_id}', 'DepartmentController@clearStudent')->name('department.clearance-request.clear');
+    Route::group(['prefix' => '/department', 'middleware' => ['auth', 'role:department']], function () {
+        // Routes accessible to users with 'faculty' role
+        Route::get('/', 'DepartmentController@index')->name('department');
+        Route::post('/clearance-request/clear/{student_id}', 'DepartmentController@clearStudent')->name('department.clearance-request.clear');
 
-    //     // Profile
-    //     Route::get('/profile', [HomeController::class, 'profile'])->name('user-profile');
-    //     Route::post('/profile/{id}', [HomeController::class, 'profileUpdate'])->name('user-profile-update');
+        // Profile
+        Route::get('/profile', [HomeController::class, 'profile'])->name('user-profile');
+        Route::post('/profile/{id}', [HomeController::class, 'profileUpdate'])->name('user-profile-update');
 
-    //     // Password Change
-    //     Route::get('change-password', [HomeController::class, 'changePassword'])->name('user.change.password.form');
-    //     Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password');
+        // Password Change
+        Route::get('change-password', [HomeController::class, 'changePassword'])->name('user.change.password.form');
+        Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password');
         
         
-    // });
+    });
 
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();

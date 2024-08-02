@@ -15,13 +15,14 @@ class Document extends Model
     protected $fillable = [
        'id', 'name', 'description'];
 
-        public function studentDocuments()
-    {
-        return $this->hasMany(StudentDocument::class);
-    }
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+       public function studentDocuments()
+       {
+           return $this->hasMany(StudentDocument::class, 'document_id');
+       }
+   
+       public function user()
+       {
+           return $this->belongsTo(User::class);
+       }
 
 }

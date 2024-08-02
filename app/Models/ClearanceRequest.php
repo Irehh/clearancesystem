@@ -23,6 +23,17 @@ class ClearanceRequest extends Model
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'Student_id');
+    }
+
+    public static function clearanceStatus($studentId, $stage)
+    {
+        $clearance = self::where('student_id', $studentId)->first();
+        
+        if ($clearance) {
+            return $clearance->$studentId;
+        } else {
+            return 'pending'; // Assuming 'pending' is the default status if no clearance record is found
+        }
     }
 }

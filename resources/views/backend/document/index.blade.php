@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-
+@section('title','E-SHOP || documents Page')
 @section('main-content')
  <!-- DataTales Example -->
  <div class="card shadow mb-4">
@@ -9,18 +9,19 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Post Category Lists</h6>
-      <a href="{{route('post-category.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Post Category</a>
+      <h6 class="m-0 font-weight-bold text-primary float-left">documents List</h6>
+      <a href="{{route('documents.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add documents</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        @if(count($postCategories)>0)
-        <table class="table table-bordered" id="post-category-dataTable" width="100%" cellspacing="0">
+        @if(count($documents)>0)
+        <table class="table table-bordered" id="documents-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
+              <th>Photo</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -30,29 +31,37 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
+              <th>Photo</th>
               <th>Status</th>
               <th>Action</th>
               </tr>
           </tfoot>
           <tbody>
-            @foreach($postCategories as $data)   
+            @foreach($documents as $documents)   
                 <tr>
-                    <td>{{$data->id}}</td>
-                    <td>{{$data->title}}</td>
-                    <td>{{$data->slug}}</td>
+                    <td>{{$documents->id}}</td>
+                    <td>{{$documents->title}}</td>
+                    <td>{{$documents->slug}}</td>
                     <td>
-                        @if($data->status=='active')
-                            <span class="badge badge-success">{{$data->status}}</span>
+                        @if($documents->photo)
+                            <img src="{{$documents->photo}}" class="img-fluid zoom" style="max-width:80px" alt="{{$documents->photo}}">
                         @else
-                            <span class="badge badge-warning">{{$data->status}}</span>
+                            <img src="{{asset('backend/img/thumbnail-default.jpg')}}" class="img-fluid zoom" style="max-width:100%" alt="avatar.png">
                         @endif
                     </td>
                     <td>
-                        <a href="{{route('post-category.edit',$data->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                    <form method="POST" action="{{route('post-category.destroy',[$data->id])}}">
-                      @csrf 
-                      @method('delete')
-                          <button class="btn btn-danger btn-sm dltBtn" data-id={{$data->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                        @if($documents->status=='active')
+                            <span class="badge badge-success">{{$documents->status}}</span>
+                        @else
+                            <span class="badge badge-warning">{{$documents->status}}</span>
+                        @endif
+                    </td>
+                    <td>
+                        <a href="{{route('documents.edit',$documents->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                        <form method="POST" action="{{route('documents.destroy',[$documents->id])}}">
+                          @csrf 
+                          @method('delete')
+                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$documents->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                     {{-- Delete Modal --}}
@@ -66,7 +75,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <form method="post" action="{{ route('banners.destroy',$user->id) }}">
+                              <form method="post" action="{{ route('documents.destroy',$user->id) }}">
                                 @csrf 
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger" style="margin:auto; text-align:center">Parmanent delete user</button>
@@ -79,9 +88,9 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$postCategories->links()}}</span>
+        <span style="float:right">{{$documents->links()}}</span>
         @else
-          <h6 class="text-center">No Post Category found!!! Please create post category</h6>
+          <h6 class="text-center">No documents found!!! Please create documents</h6>
         @endif
       </div>
     </div>
@@ -94,6 +103,13 @@
   <style>
       div.dataTables_wrapper div.dataTables_paginate{
           display: none;
+      }
+      .zoom {
+        transition: transform .2s; /* Animation */
+      }
+
+      .zoom:hover {
+        transform: scale(3.2);
       }
   </style>
 @endpush
@@ -109,11 +125,11 @@
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
       
-      $('#post-category-dataTable').DataTable( {
+      $('#documents-dataTable').DataTable( {
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[3,4]
+                    "targets":[3,4,5]
                 }
             ]
         } );

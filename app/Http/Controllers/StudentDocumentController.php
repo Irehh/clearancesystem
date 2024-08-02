@@ -11,23 +11,18 @@ use Illuminate\Support\Facades\Storage;
 
 class StudentDocumentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $studentId = auth()->user()->id;
-        $document=StudentDocument::orderBy('id','DESC')->where('student_id',$studentId)->paginate(10);
-        return view('student.document.index')->with('documents',$document);
-    }
+    
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function index()
+{
+    $document = StudentDocument::getStudentDocuments()
+                    ->where('student_id', auth()->user()->id)
+                    ->paginate(10);
+                    
+
+    return view('student.document.index')->with('documents',$document);
+}
+
      public function create()
     {
         $studentId = auth()->user()->id;
@@ -39,20 +34,43 @@ class StudentDocumentController extends Controller
 
     }
     
-    public function store(Request $request)
+//     public function store(Request $request)
+// {  
+//     $data=$request->all();
+//     // Loop through each document and save it to the database
+//     foreach ($data['document_id'] as $documentId) {
+//         StudentDocument::create([
+//             'student_id' => $data['student_id'],
+//             'document_id' => $documentId,
+//             'file_path' => $data['photo']['doc'. $documentId],
+//         ]);
+//     }
+//     request()->session()->flash('success','Document successfully Saved');
+//     return redirect()->back();
+// }
+
+public function store(Request $request)
 {  
-    $data=$request->all();
+    $data = $request->all();
+    
+    // Filter out empty or null values
+    $filteredData = array_filter($data['document_id'], function ($documentId) use ($data) {
+        return isset($data['photo']['doc'. $documentId]) && !empty($data['photo']['doc'. $documentId]);
+    });
+
     // Loop through each document and save it to the database
-    foreach ($data['document_id'] as $documentId) {
+    foreach ($filteredData as $documentId) {
         StudentDocument::create([
             'student_id' => $data['student_id'],
             'document_id' => $documentId,
             'file_path' => $data['photo']['doc'. $documentId],
         ]);
     }
+
     request()->session()->flash('success','Document successfully Saved');
     return redirect()->back();
 }
+
 
     /**
      * Display the specified resource.
@@ -111,12 +129,6 @@ class StudentDocumentController extends Controller
         return redirect()->route('document.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $document=document::findOrFail($id);
@@ -129,4 +141,6 @@ class StudentDocumentController extends Controller
         }
         return redirect()->route('document.index');
     }
+
+    
 }

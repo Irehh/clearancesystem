@@ -23,7 +23,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Document
+        Clearance
     </div>
 
     <li class="nav-item">
@@ -33,49 +33,12 @@
       </a>
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Banner Options:</h6>
+          <h6 class="collapse-header">Document Options:</h6>
           <a class="collapse-item" href="{{route('document.index')}}">Document</a>
           <a class="collapse-item" href="{{route('document.create')}}">Add Document</a>
         </div>
       </div>
     </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Clearance
-        </div>
-
-    <!-- Categories -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="true" aria-controls="categoryCollapse">
-          <i class="fas fa-sitemap"></i>
-          <span>Faculty Clearance</span>
-        </a>
-        <div id="categoryCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Submit Files:</h6>
-            <a class="collapse-item" href="{{route('faculty.create')}}">Start Clearance</a>
-            <a class="collapse-item" href="">Add Category</a>
-          </div>
-        </div>
-    </li>
-
-    <!--Orders -->
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-hammer fa-chart-area"></i>
-            <span>Security Clearance</span>
-        </a>
-    </li>
-
-    <!-- Reviews -->
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-comments"></i>
-            <span>Alumni Clearance</span></a>
-    </li>
-
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
       <button class="rounded-circle border-0" id="sidebarToggle"></button>

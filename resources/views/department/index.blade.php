@@ -90,9 +90,14 @@
     <div class="row">
       @php
           use App\Models\StudentDocument;
-          // Fetch student documents along with their associated document details
-          $studentDocuments = StudentDocument::with(['document', 'student'])->whereIn('document_id', [2, 3])->get()
-              ->groupBy('student_id');
+            // Fetch student documents along with their associated document details
+            $studentDocuments = StudentDocument::with(['document', 'student'])
+                ->whereIn('document_id', [7, 6,8,9])
+                ->whereHas('student', function($query) {
+                    $query->where('department_id', 6);
+                })
+                ->get()
+                ->groupBy('student_id');
       @endphp
       <!-- Files -->
       @foreach($studentDocuments as $studentId => $documents)

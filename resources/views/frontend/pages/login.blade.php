@@ -19,7 +19,7 @@
     </div>
     <!-- End Breadcrumbs -->
             
-    <!-- Shop Login -->
+    <!--  Login -->
     <section class="shop login section">
         <div class="container">
             <div class="row"> 
@@ -55,7 +55,6 @@
                                         <a href="{{route('register.form')}}" class="btn">Register</a>
                                         OR
                                         <a href="{{route('login.redirect','google')}}" class="btn btn-google"><i class="ti-google"></i></a>
-
                                     </div>
                                     <div class="checkbox">
                                         <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">Remember me</label>

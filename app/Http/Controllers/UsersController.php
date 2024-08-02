@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClearanceRequest;
 use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class UsersController extends Controller
      //admin controls this controller
     public function index()
     {
-        $users= Student::orderBy('id','ASC')->paginate(10);
+        $users= User::where('role','student')->orderBy('id','ASC')->paginate(10);
         return view('backend.users.index')->with('users',$users);
     }
 
@@ -48,6 +49,7 @@ class UsersController extends Controller
             'role'=>'required|in:admin,user',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
+            
         ]);
         // dd($request->all());
         $data=$request->all();
@@ -85,7 +87,8 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user=User::findOrFail($id);
-        return view('backend.users.edit')->with('user',$user);
+        $student = Student::where('student_id', $user->id)->first();
+        return view('backend.users.edit')->with('user',$user)->with('student',$student);
     }
 
     /**
@@ -104,13 +107,40 @@ class UsersController extends Controller
         [
             'name'=>'string|required|max:30',
             'email'=>'string|required',
-            'role'=>'required|in:admin,user',
+            'role'=>'required|in:admin,student,faculty,hostel,alumni,security,department',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
+            'faculty'=>'nullable|numeric',
+            'department'=>'nullable|numeric',
         ]);
-        // dd($request->all());
         $data=$request->all();
-        // dd($data);
+        
+        if (isset($data['department'])) {
+            $user->department_id = $data['department'];
+        }
+        if (isset($data['faculty'])) {
+            $user->faculty_id = $data['faculty'];
+        }
+            // Check if the role is being updated to 'student' and the status is being updated to 'active'
+        if ($data['role'] === 'student' && $data['status'] === 'active') {
+            // Create a student record if the user's role is becoming 'student' and status is becoming 'active'
+            
+            $student = Student::firstOrCreate(
+                ['student_id' => $user->id], // Search condition
+                [
+                    'first_name' => $data['name'],
+                    'registration_number' => $data['regno'],
+                    'faculty_id' => $data['faculty'],
+                    'department_id' => $data['department'],
+                    // Other attributes you want to set for the student
+                ]
+            );
+
+            if (!$student) {
+                request()->session()->flash('error', 'Error occurred while creating student record');
+                return redirect()->route('users.index');
+            }
+        }
         
         $status=$user->fill($data)->save();
         if($status){

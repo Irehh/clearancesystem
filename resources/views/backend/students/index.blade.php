@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','UMART || Brand Page')
+
 @section('main-content')
  <!-- DataTales Example -->
  <div class="card shadow mb-4">
@@ -9,54 +9,64 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Brand List</h6>
-      <a href="{{route('brand.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Brand</a>
+      <h6 class="m-0 font-weight-bold text-primary float-left">Users List</h6>
+      <a href="{{route('users.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        @if(count($brands)>0)
-        <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered" id="user-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th>S.N.</th>
-              <th>Title</th>
-              <th>Slug</th>
+              <th>Name</th>
+              <th>Reg.No</th>
+              <th>Photo</th>
+              <th>Level</th>
+              <th>Department</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tfoot>
             <tr>
-              <th>S.N.</th>
-              <th>Title</th>
-              <th>Slug</th>
-              <th>Status</th>
-              <th>Action</th>
+                <th>S.N.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Photo</th>
+                <th>Join Date</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
           </tfoot>
           <tbody>
-            @foreach($brands as $brand)   
+            @foreach($users as $user)   
                 <tr>
-                    <td>{{$brand->id}}</td>
-                    <td>{{$brand->title}}</td>
-                    <td>{{$brand->slug}}</td>
+                    <td>{{$user->id}}</td>
+                    <td>{{$user->first_name}}</td>
+                    <td>{{$user->registration_number}}</td>
                     <td>
-                        @if($brand->status=='active')
-                            <span class="badge badge-success">{{$brand->status}}</span>
+                        @if($user->photo)
+                            <img src="{{$user->photo}}" class="img-fluid rounded-circle" style="max-width:50px" alt="{{$user->photo}}">
                         @else
-                            <span class="badge badge-warning">{{$brand->status}}</span>
+                            <img src="{{asset('backend/img/avatar.png')}}" class="img-fluid rounded-circle" style="max-width:50px" alt="avatar.png">
                         @endif
                     </td>
+                    <td>{{ $user->level }}</td>
+                    <td>{{$user->department}}</td>
                     <td>
-                        <a href="{{route('brand.edit',$brand->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                        <form method="POST" action="{{route('brand.destroy',[$brand->id])}}">
-                          @csrf 
-                          @method('delete')
-                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$brand->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                        {{$user->phone_no}}
+                    </td>
+                    <td>
+                        <a href="{{route('users.edit',$user->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                    <form method="POST" action="{{route('users.destroy',[$user->id])}}">
+                      @csrf 
+                      @method('delete')
+                          <button class="btn btn-danger btn-sm dltBtn" data-id={{$user->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                     {{-- Delete Modal --}}
-                    {{-- <div class="modal fade" id="delModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="#delModal{{$user->id}}Label" aria-hidden="true">
+                    <div class="modal fade" id="delModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="#delModal{{$user->id}}Label" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -66,7 +76,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <form method="post" action="{{ route('banners.destroy',$user->id) }}">
+                              <form method="post" action="{{ route('users.destroy',$user->id) }}">
                                 @csrf 
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger" style="margin:auto; text-align:center">Parmanent delete user</button>
@@ -74,15 +84,12 @@
                             </div>
                           </div>
                         </div>
-                    </div> --}}
+                    </div>
                 </tr>  
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$brands->links()}}</span>
-        @else
-          <h6 class="text-center">No brands found!!! Please create brand</h6>
-        @endif
+        <span style="float:right">{{$users->links()}}</span>
       </div>
     </div>
 </div>
@@ -94,13 +101,6 @@
   <style>
       div.dataTables_wrapper div.dataTables_paginate{
           display: none;
-      }
-      .zoom {
-        transition: transform .2s; /* Animation */
-      }
-
-      .zoom:hover {
-        transform: scale(3.2);
       }
   </style>
 @endpush
@@ -116,11 +116,11 @@
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
       
-      $('#banner-dataTable').DataTable( {
+      $('#user-dataTable').DataTable( {
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[3,4]
+                    "targets":[6,7]
                 }
             ]
         } );

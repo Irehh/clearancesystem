@@ -15,13 +15,6 @@
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
-        <div class="form-group">
-          <label for="inputregno" class="col-form-label">Registration Number</label>
-        <input id="inputregno" type="text" name="regno" placeholder="Enter regno"   class="form-control">
-        @error('regno')
-        <span class="text-danger">{{$message}}</span>
-        @enderror
-        </div>
 
         <div class="form-group">
             <label for="inputEmail" class="col-form-label">Email</label>
@@ -31,21 +24,13 @@
           @enderror
         </div>
 
-        <div class="form-group">
-          <label for="inputfaculty" class="col-form-label">Faculty ID</label>
-        <input id="inputfaculty" type="faculty" name="faculty" placeholder="Enter Faculty ID"  value="{{$user->faculty_id}}" class="form-control">
-        @error('faculty')
-        <span class="text-danger">{{$message}}</span>
-        @enderror
-        </div>
-
-        <div class="form-group">
-          <label for="inputdepartment" class="col-form-label">department</label>
-        <input id="inputdepartment" type="text" name="department" placeholder="Enter department ID"  value="{{$user->department_id}}" class="form-control">
-        @error('department')
-        <span class="text-danger">{{$message}}</span>
-        @enderror
-        </div>
+        {{-- <div class="form-group">
+            <label for="inputPassword" class="col-form-label">Password</label>
+          <input id="inputPassword" type="password" name="password" placeholder="Enter password"  value="{{$user->password}}" class="form-control">
+          @error('password')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div> --}}
 
         <div class="form-group">
         <label for="inputPhoto" class="col-form-label">Photo</label>
@@ -72,12 +57,7 @@
                 <option value="">-----Select Role-----</option>
                 @foreach($roles as $role)
                     <option value="{{$role->role}}" {{(($role->role=='admin') ? 'selected' : '')}}>Admin</option>
-                    <option value="{{$role->role}}" {{(($role->role=='student') ? 'selected' : '')}}>student</option>
-                    <option value="{{$role->role}}" {{(($role->role=='department') ? 'selected' : '')}}>department</option>
-                    <option value="{{$role->role}}" {{(($role->role=='faculty') ? 'selected' : '')}}>faculty</option>
-                    <option value="{{$role->role}}" {{(($role->role=='alumni') ? 'selected' : '')}}>alumni</option>
-                    <option value="{{$role->role}}" {{(($role->role=='hostel') ? 'selected' : '')}}>hostel</option>
-                    <option value="{{$role->role}}" {{(($role->role=='security') ? 'selected' : '')}}>security</option>
+                    <option value="{{$role->role}}" {{(($role->role=='user') ? 'selected' : '')}}>User</option>
                 @endforeach
             </select>
           @error('role')

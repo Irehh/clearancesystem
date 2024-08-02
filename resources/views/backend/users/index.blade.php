@@ -17,11 +17,11 @@
         <table class="table table-bordered" id="user-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>S.N.</th>
+              <th>ID</th>
               <th>Name</th>
-              <th>Reg.No</th>
+              <th>Role</th>
               <th>Photo</th>
-              <th>Level</th>
+              <th>Faculty</th>
               <th>Department</th>
               <th>Status</th>
               <th>Action</th>
@@ -29,22 +29,22 @@
           </thead>
           <tfoot>
             <tr>
-                <th>S.N.</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Photo</th>
-                <th>Join Date</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Action</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Photo</th>
+              <th>Faculty</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Action</th>
               </tr>
           </tfoot>
           <tbody>
             @foreach($users as $user)   
                 <tr>
                     <td>{{$user->id}}</td>
-                    <td>{{$user->first_name}}</td>
-                    <td>{{$user->registration_number}}</td>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->role}}</td>
                     <td>
                         @if($user->photo)
                             <img src="{{$user->photo}}" class="img-fluid rounded-circle" style="max-width:50px" alt="{{$user->photo}}">
@@ -52,10 +52,10 @@
                             <img src="{{asset('backend/img/avatar.png')}}" class="img-fluid rounded-circle" style="max-width:50px" alt="avatar.png">
                         @endif
                     </td>
-                    <td>{{ $user->level }}</td>
-                    <td>{{$user->department}}</td>
+                    <td>{{ $user->faculty_id }}</td>
+                    <td>{{$user->department_id}}</td>
                     <td>
-                        {{$user->phone_no}}
+                        {{$user->status}}
                     </td>
                     <td>
                         <a href="{{route('users.edit',$user->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
